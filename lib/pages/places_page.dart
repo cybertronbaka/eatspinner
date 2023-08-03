@@ -3,6 +3,7 @@ import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -54,15 +55,69 @@ class PlacesPage extends StatelessWidget {
               ],
             ),
           )),
-          Expanded(flex: 6, child: Obx(
-            () => controller.isFetching.isFalse ? ListView(
-              physics: const BouncingScrollPhysics(),
-              children: controller.places.value.map((e){
-                return PlaceCard(place: e);
-              }).toList(),
-            ) : const Column(children: [SizedBox(height: 20), SizedBox(height: 30, width: 30, child: CircularProgressIndicator(color: Colors.blue))],)
-          ))
+          Expanded(flex: 6, child: Obx((){
+            if(controller.isFetching.isTrue) return const _Loader();
+
+            return controller.places.isEmpty
+                ? const NoDataWidget() : const PlacesListView();
+          }))
         ],
+      ),
+    );
+  }
+}
+
+class PlacesListView extends StatelessWidget {
+  const PlacesListView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<PlacesController>();
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      children: controller.places.value.map((e){
+        return PlaceCard(place: e);
+      }).toList(),
+    );
+  }
+}
+
+class _Loader extends StatelessWidget {
+  const _Loader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        SizedBox(height: 20),
+        SizedBox(
+            height: 30,
+            width: 30,
+            child: CircularProgressIndicator(color: Colors.blue)
+        )
+      ]
+    );
+  }
+}
+
+class NoDataWidget extends StatelessWidget{
+  const NoDataWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+          children: [
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 250,
+              child: SvgPicture.asset(
+                'assets/images/nodata.svg',
+                semanticsLabel: 'No Data'
+              ),
+            )
+          ]
       ),
     );
   }

@@ -16,6 +16,7 @@ class SpinnerController extends GetxController{
   Rx<int> selectedIndex = 0.obs;
   Rx<bool> isSpinning = false.obs;
   Rx<bool> isFetching = false.obs;
+  Rx<bool> canBeSpun = true.obs;
 
   void spin(){
     if(isSpinning.isTrue) return;
@@ -31,6 +32,7 @@ class SpinnerController extends GetxController{
     selectedIndex.value = 0;
     isSpinning.value = false;
     isFetching.value = true;
+    canBeSpun.value = true;
     fetchNearby();
   }
 
@@ -40,7 +42,15 @@ class SpinnerController extends GetxController{
         return;
       }
       PlaceRepo().searchNearby(value).then((value){
-        places.value = value;
+        if(value.isEmpty){
+          places.value = [Place(name: 'None'), Place(name: 'None')];
+          canBeSpun.value = false;
+        } else if (value.length == 1) {
+          places.value = [value.first, value.first];
+          canBeSpun.value = false;
+        } else {
+          places.value = value;
+        }
         isFetching.value = false;
       }).catchError((error){
         // TODO: DO something here!

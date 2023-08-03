@@ -56,7 +56,7 @@ class SpinnerPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: FilledButton(
-                    onPressed: controller.isSpinning.isTrue ? null : (){
+                    onPressed: controller.isSpinning.isTrue || controller.canBeSpun.isFalse ? null : (){
                       controller.spin();
                     },
                     child: const Padding(

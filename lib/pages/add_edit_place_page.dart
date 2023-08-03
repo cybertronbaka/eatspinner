@@ -37,11 +37,6 @@ class AddEditPlacePage extends StatelessWidget {
           child: SpacedColumn(
             spaceHeight: 20,
             children: [
-              ReactiveFormConsumer(
-                builder: (context, fg, _){
-                  return Text(fg.value.toString());
-                }
-              ),
               const EsTextField<String>(
                 formControlName: 'name',
                 labelText: 'Name',

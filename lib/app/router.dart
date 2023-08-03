@@ -28,7 +28,9 @@ final router = GoRouter(
       path: Routes.addPlace,
       builder: (BuildContext context, GoRouterState state){
         final mapController = Get.put(MyMapController());
+        final controller = Get.put(AddEditPlaceController());
         mapController.reset();
+        controller.reset();
         return const AddEditPlacePage(isEdit: false);
       }
     ),
@@ -43,6 +45,8 @@ final router = GoRouter(
       builder: (BuildContext context, GoRouterState state){
         final String? id = state.pathParameters['id'];
         final mapController = Get.put(MyMapController());
+        final controller = Get.put(AddEditPlaceController());
+        controller.reset(int.parse(id!));
         mapController.reset();
         return AddEditPlacePage(isEdit: true, id: id);
       }

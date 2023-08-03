@@ -91,23 +91,27 @@ class AddEditPlaceForm extends StatelessWidget {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: FilledButton(
-                      onPressed: controller.isSaving.isTrue ? null : (){
-                        controller.save().then((value){
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Place Saved Successfully'))
-                          );
-                          context.pop();
-                        }).catchError((e){
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Error: ${e.toString()}'))
-                          );
-                        });
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text('Save'),
-                      )
+                  child: ReactiveFormConsumer(
+                    builder: (BuildContext context, FormGroup formGroup, Widget? child) {
+                      return FilledButton(
+                          onPressed: controller.isSaving.isTrue || formGroup.invalid ? null : (){
+                            controller.save().then((value){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Place Saved Successfully'))
+                              );
+                              context.pop();
+                            }).catchError((e){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Error: ${e.toString()}'))
+                              );
+                            });
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Text('Save'),
+                          )
+                      );
+                    },
                   ),
                 )
               ],

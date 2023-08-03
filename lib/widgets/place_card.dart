@@ -43,7 +43,7 @@ class PlaceCard extends StatelessWidget{
                         const SizedBox(height: 10),
                         Text('Name: ${place.name ?? '--'}'),
                         const SizedBox(height: 5),
-                        Text('Name: ${place.description ?? '--'}'),
+                        Text('Description: ${place.description ?? '--'}'),
                       ],
                     ),
                   )),

@@ -1,5 +1,6 @@
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -17,6 +18,9 @@ FormGroup _createFormGroup([Place? place]){
 }
 
 class AddEditPlaceController extends GetxController{
+  BuildContext context;
+  AddEditPlaceController(this.context);
+
   Rx<double> stars = 0.0.obs;
   Rx<FormGroup> formGroup = _createFormGroup().obs;
   Rx<bool> isSaving = false.obs;
@@ -33,7 +37,9 @@ class AddEditPlaceController extends GetxController{
         stars.value = value.rating ?? 0.0;
         isFetching.value = false;
       }).catchError((e){
-        // TODO: Add Toast
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}'))
+        );
         formGroup.value = _createFormGroup();
         isFetching.value = false;
       });
@@ -49,9 +55,21 @@ class AddEditPlaceController extends GetxController{
 
     isSaving.value = true;
     Place place = Place.fromJson(formGroup.value.value);
-    final res = await PlaceRepo().save(place);
-    isSaving.value = false;
-    return res;
+    Place? res;
+    try{
+      res = await PlaceRepo().save(place);
+      isSaving.value = false;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Place Saved Successfully'))
+      );
+      return res;
+    } catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}'))
+      );
+      isSaving.value = false;
+    }
+    return null;
   }
 
   void onMarkerPlaced(LatLng latLng){

@@ -76,7 +76,15 @@ class PlacesListView extends StatelessWidget {
     return ListView(
       physics: const BouncingScrollPhysics(),
       children: controller.places.value.map((e){
-        return PlaceCard(place: e);
+        return PlaceCard(
+          place: e,
+          onDelete: (place){
+            controller.deletePlace(place.id!);
+          },
+          onEdit: (place){
+            context.go(Routes.editPlace(place.id!));
+          },
+        );
       }).toList(),
     );
   }

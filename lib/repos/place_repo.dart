@@ -25,6 +25,14 @@ class PlaceRepo {
     return Place.fromJson(resJson);
   }
 
+  Future<void> delete(int id) async {
+    final data = await supabase
+        .from(_tableName)
+        .delete()
+        .match({ 'id': id });
+    print('----------Data: $data');
+  }
+
   Future<Place?> fetchOne(int id) async {
     var filterBuilder = supabase.from(_tableName).select('*').eq('id', id);
 

@@ -1,5 +1,6 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/models/_all.dart';
+import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,16 @@ import 'package:latlong2/latlong.dart';
 class PlaceCard extends StatelessWidget{
   final Place place;
   final bool viewOnly;
+  final void Function(Place place)? onDelete;
+  final void Function(Place place)? onEdit;
 
-  const PlaceCard({super.key, required this.place, this.viewOnly = false});
+  const PlaceCard({
+    super.key,
+    required this.place,
+    this.viewOnly = false,
+    this.onDelete,
+    this.onEdit
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +59,14 @@ class PlaceCard extends StatelessWidget{
                         children: [
                           IconButton(
                             onPressed: (){
-                              context.go(Routes.editPlace(place.id!));
+                              if(onEdit != null) onEdit!(place);
                             },
                             icon: const Icon(Icons.edit_outlined, size: 20)
                           ),
                           IconButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              if(onDelete != null) onDelete!(place);
+                            },
                             icon: const Icon(Icons.delete_outlined, color: Colors.red, size: 20)
                           )
                         ],

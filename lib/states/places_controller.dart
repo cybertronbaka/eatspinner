@@ -1,7 +1,5 @@
-import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
-import 'package:eatspinner/repos/location_repo.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -42,7 +40,9 @@ class PlacesController extends GetxController{
       places.value = value;
       isFetching.value = false;
     }).catchError((error){
-      // TODO: DO something here!
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${error.toString()}'))
+      );
       isFetching.value = false;
     });
   }
@@ -50,12 +50,29 @@ class PlacesController extends GetxController{
 
   void search(String q){
     isFetching.value = true;
+    if(q.isEmpty) fetchMany();
+
     PlaceRepo().search(q).then((value){
       places.value = value;
       isFetching.value = false;
     }).catchError((error){
-      // TODO: DO something here!
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${error.toString()}'))
+      );
       isFetching.value = false;
+    });
+  }
+
+  void deletePlace(int id){
+    PlaceRepo().delete(id).then((value){
+      fetchMany();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Place Removed Successfully'))
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${error.toString()}'))
+      );
     });
   }
 }

@@ -59,79 +59,74 @@ class AddEditPlaceForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<AddEditPlaceController>();
 
-    return ReactiveForm(
-      formGroup: controller.formGroup.value,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        physics: const BouncingScrollPhysics(),
-        child: SpacedColumn(
-          spaceHeight: 20,
-          children: [
-            ReactiveFormConsumer(
-                builder: (context, fg, _){
-                  return Text(fg.value.toString());
-                }
-            ),
-            const EsTextField<String>(
-              formControlName: 'name',
-              labelText: 'Name',
-            ),
-            const EsTextField<String>(
-              formControlName: 'description',
-              labelText: 'Description',
-            ),
-            MapWidget(
-              onMarkerPlaced: controller.onMarkerPlaced,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: RatingStars(
-                value: controller.stars.value,
-                onValueChanged: controller.onRatingChanged,
-                starCount: 5,
-                starSize: 30,
-                valueLabelColor: const Color(0xff9b9b9b),
-                valueLabelTextStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 16
+    return Obx(
+      () => ReactiveForm(
+          formGroup: controller.formGroup.value,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            physics: const BouncingScrollPhysics(),
+            child: SpacedColumn(
+              spaceHeight: 20,
+              children: [
+                // ReactiveFormConsumer(
+                //     builder: (context, fg, _){
+                //       return Text(fg.value.toString());
+                //     }
+                // ),
+                const EsTextField<String>(
+                  formControlName: 'name',
+                  labelText: 'Name',
                 ),
-                valueLabelRadius: 10,
-                maxValue: 5,
-                starSpacing: 2,
-                maxValueVisibility: true,
-                valueLabelVisibility: true,
-                animationDuration: const Duration(seconds: 1),
-                valueLabelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                starOffColor: const Color(0xffe7e8ea),
-                starColor: Colors.orange,
-              ),
+                const EsTextField<String>(
+                  formControlName: 'description',
+                  labelText: 'Description',
+                ),
+                MapWidget(
+                  onMarkerPlaced: controller.onMarkerPlaced,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: RatingStars(
+                    value: controller.stars.value,
+                    onValueChanged: controller.onRatingChanged,
+                    starCount: 5,
+                    starSize: 30,
+                    valueLabelColor: const Color(0xff9b9b9b),
+                    valueLabelTextStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 16
+                    ),
+                    valueLabelRadius: 10,
+                    maxValue: 5,
+                    starSpacing: 2,
+                    maxValueVisibility: true,
+                    valueLabelVisibility: true,
+                    animationDuration: const Duration(seconds: 1),
+                    valueLabelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                    starOffColor: const Color(0xffe7e8ea),
+                    starColor: Colors.orange,
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: FilledButton(
+                      onPressed: controller.isSaving.isTrue ? null : (){
+                        controller.save().then((value){
+                          context.go(Routes.places);
+                        });
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Text('Save'),
+                      )
+                  ),
+                )
+              ],
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: FilledButton(
-                  onPressed: controller.isSaving.isTrue ? null : (){
-                    controller.save().then((value){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Place Saved! Successfully'))
-                      );
-                      context.go(Routes.places);
-                    }).catchError((error){
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: ${error.toString()}'))
-                      );
-                    });
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(20),
-                    child: Text('Save'),
-                  )
-              ),
-            )
-          ],
-        ),
-      ),
+          ),
+        )
     );
   }
 }

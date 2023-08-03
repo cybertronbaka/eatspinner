@@ -95,15 +95,12 @@ class _Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        SizedBox(height: 20),
-        SizedBox(
-            height: 30,
-            width: 30,
-            child: CircularProgressIndicator(color: Colors.blue)
-        )
-      ]
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      children: const [
+        PlaceCardShimmer(),
+        PlaceCardShimmer()
+      ],
     );
   }
 }

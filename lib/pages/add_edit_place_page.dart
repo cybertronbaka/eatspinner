@@ -30,23 +30,8 @@ class AddEditPlacePage extends StatelessWidget {
         title:Text(isEdit ? 'Edit Place' : 'Add Place'),
       ),
       body: Obx(() => controller.isFetching.isTrue
-          ? const _Loader()
+          ? const AddEditPlaceFormShimmer()
           : const AddEditPlaceForm()
-      ),
-    );
-  }
-}
-
-class _Loader extends StatelessWidget {
-  const _Loader({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: SizedBox(
-        width: 30,
-        height: 30,
-        child: CircularProgressIndicator(color: Colors.blue),
       ),
     );
   }
@@ -68,11 +53,6 @@ class AddEditPlaceForm extends StatelessWidget {
             child: SpacedColumn(
               spaceHeight: 20,
               children: [
-                // ReactiveFormConsumer(
-                //     builder: (context, fg, _){
-                //       return Text(fg.value.toString());
-                //     }
-                // ),
                 const EsTextField<String>(
                   formControlName: 'name',
                   labelText: 'Name',

@@ -5,6 +5,7 @@ import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 
 class SpinnerController extends GetxController{
@@ -22,7 +23,12 @@ class SpinnerController extends GetxController{
     if(isSpinning.isTrue) return;
 
     onSpinStart();
-    selectedIndex.value = Random().nextInt(places.length - 1);
+    List<WeightedItem> weightedItems = places.value.mapIndexed((i, e){
+      final weight = (0.4 * (i + 1)) + ((e.rating ?? 0.0) * 0.6);
+      print('WEIGHT FOR ${e.name} is $weight');
+      return WeightedItem<Place>(e, weight);
+    }).toList();
+    selectedIndex.value = WeightedRandom.generate(weightedItems);
     fortuneStream.value.add(selectedIndex.value);
     print('Selected is ${places.value[selectedIndex.value].name}');
   }

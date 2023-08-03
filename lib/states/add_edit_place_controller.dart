@@ -18,8 +18,7 @@ FormGroup _createFormGroup([Place? place]){
 }
 
 class AddEditPlaceController extends GetxController{
-  BuildContext context;
-  AddEditPlaceController(this.context);
+  AddEditPlaceController();
 
   Rx<double> stars = 0.0.obs;
   Rx<FormGroup> formGroup = _createFormGroup().obs;
@@ -37,9 +36,6 @@ class AddEditPlaceController extends GetxController{
         stars.value = value.rating ?? 0.0;
         isFetching.value = false;
       }).catchError((e){
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.toString()}'))
-        );
         formGroup.value = _createFormGroup();
         isFetching.value = false;
       });
@@ -59,17 +55,11 @@ class AddEditPlaceController extends GetxController{
     try{
       res = await PlaceRepo().save(place);
       isSaving.value = false;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Place Saved Successfully'))
-      );
       return res;
     } catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.toString()}'))
-      );
       isSaving.value = false;
+      rethrow;
     }
-    return null;
   }
 
   void onMarkerPlaced(LatLng latLng){

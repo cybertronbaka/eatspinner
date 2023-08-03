@@ -94,7 +94,14 @@ class AddEditPlaceForm extends StatelessWidget {
                   child: FilledButton(
                       onPressed: controller.isSaving.isTrue ? null : (){
                         controller.save().then((value){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Place Saved Successfully'))
+                          );
                           context.go(Routes.places);
+                        }).catchError((e){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Error: ${e.toString()}'))
+                          );
                         });
                       },
                       child: const Padding(

@@ -10,8 +10,7 @@ FormGroup _createFormGroup(){
 }
 
 class PlacesController extends GetxController{
-  BuildContext context;
-  PlacesController(this.context);
+  PlacesController();
 
   FormGroup formGroup = _createFormGroup();
   RxList places = RxList([]);
@@ -34,45 +33,33 @@ class PlacesController extends GetxController{
     fetchMany();
   }
 
-  void fetchMany(){
+  Future<void> fetchMany() async {
     isFetching.value = true;
     PlaceRepo().fetchMany().then((value){
       places.value = value;
       isFetching.value = false;
     }).catchError((error){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${error.toString()}'))
-      );
       isFetching.value = false;
     });
   }
 
 
-  void search(String q){
+  Future<void> search(String q) async {
     isFetching.value = true;
     if(q.isEmpty) fetchMany();
 
-    PlaceRepo().search(q).then((value){
-      places.value = value;
+    try{
+      final res = await PlaceRepo().search(q);
+      places.value = res;
       isFetching.value = false;
-    }).catchError((error){
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${error.toString()}'))
-      );
+    }catch(e){
       isFetching.value = false;
-    });
+      rethrow;
+    }
   }
 
-  void deletePlace(int id){
-    PlaceRepo().delete(id).then((value){
-      fetchMany();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Place Removed Successfully'))
-      );
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${error.toString()}'))
-      );
-    });
+  Future<void> deletePlace(int id) async {
+    await PlaceRepo().delete(id);
+    await fetchMany();
   }
 }

@@ -47,10 +47,20 @@ class PlacesPage extends StatelessWidget {
                     onChanged: (control){
                       if(control.value == null || control.value!.length < 3) return;
 
-                      controller.search(control.value!);
+                      controller.search(control.value!).catchError((e){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error: ${e.toString()}'))
+                        );
+                      });
                     },
-                    onEditingComplete: (control) => controller.search(control.value!)
-                  ),
+                    onEditingComplete: (control){
+                      controller.search(control.value!).catchError((e){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error: ${e.toString()}'))
+                        );
+                      });
+                    }
+                  )
                 )),
               ],
             ),
@@ -79,7 +89,15 @@ class PlacesListView extends StatelessWidget {
         return PlaceCard(
           place: e,
           onDelete: (place){
-            controller.deletePlace(place.id!);
+            controller.deletePlace(place.id!).then((value){
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Place Removed Successfully'))
+              );
+            }).catchError((error){
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Error: ${error.toString()}'))
+              );
+            });
           },
           onEdit: (place){
             context.go(Routes.editPlace(place.id!));

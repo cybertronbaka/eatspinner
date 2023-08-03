@@ -24,7 +24,7 @@ class SpinnerController extends GetxController{
     onSpinStart();
     selectedIndex.value = Random().nextInt(places.length - 1);
     fortuneStream.value.add(selectedIndex.value);
-    print('Selected is ${places[selectedIndex.value]}');
+    print('Selected is ${places.value[selectedIndex.value].name}');
   }
 
   void reset(){
@@ -67,25 +67,21 @@ class SpinnerController extends GetxController{
   void onSpinDone(){
     print('Spinning Done!');
     isSpinning.value = false;
-    showSelectedPlace();
   }
 
-  void showSelectedPlace(){
-    showDialog(
-      context: context,
-      builder: (context){
-        return AlertDialog(
-          title: Text(places[selectedIndex.value]!.name ?? '---'),
+  void showSelectedPlace(BuildContext context){
+    showDialog(context: context, builder: (context){
+      return AlertDialog(
+          title: Text(places.value[selectedIndex.value].name ?? '---'),
           content: SizedBox(
-            height: 500,
-            width: 500,
-            child: PlaceCard(
-              place: places[selectedIndex.value]!,
-              viewOnly: true,
-            )
+              height: 500,
+              width: 500,
+              child: PlaceCard(
+                place: places.value[selectedIndex.value],
+                viewOnly: true,
+              )
           )
-        );
-      }
-    );
+      );
+    });
   }
 }

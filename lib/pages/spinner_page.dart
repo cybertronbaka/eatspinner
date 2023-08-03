@@ -54,7 +54,10 @@ class SpinnerPageBody extends StatelessWidget {
               rotationCount: 30,
               duration: const Duration(seconds: 10),
               selected: controller.fortuneStream.value.stream,
-              onAnimationEnd: controller.onSpinDone,
+              onAnimationEnd: (){
+                controller.onSpinDone();
+                controller.showSelectedPlace(context);
+              },
               indicators: const [
                 FortuneIndicator(
                   alignment: Alignment.topCenter,

@@ -1,7 +1,6 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/pages/_all.dart';
 import 'package:eatspinner/states/_all.dart';
-import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +18,7 @@ final router = GoRouter(
     GoRoute(
       path: Routes.places,
       builder: (context, state){
-        final controller = Get.put(PlacesController(context));
+        final controller = Get.put(PlacesController());
         controller.reset(true);
         return const PlacesPage();
       },
@@ -28,7 +27,7 @@ final router = GoRouter(
       path: Routes.addPlace,
       builder: (BuildContext context, GoRouterState state){
         final mapController = Get.put(MyMapController());
-        final controller = Get.put(AddEditPlaceController(context));
+        final controller = Get.put(AddEditPlaceController());
         mapController.reset();
         controller.reset();
         return const AddEditPlacePage(isEdit: false);
@@ -45,7 +44,7 @@ final router = GoRouter(
       builder: (BuildContext context, GoRouterState state){
         final String? id = state.pathParameters['id'];
         final mapController = Get.put(MyMapController());
-        final controller = Get.put(AddEditPlaceController(context));
+        final controller = Get.put(AddEditPlaceController());
         controller.reset(int.parse(id!));
         mapController.reset();
         return AddEditPlacePage(isEdit: true, id: id);

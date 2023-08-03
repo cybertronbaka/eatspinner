@@ -1,11 +1,7 @@
-import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/models/_all.dart';
-import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
-import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
 class PlaceCard extends StatelessWidget{

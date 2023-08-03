@@ -20,7 +20,7 @@ class SpinnerPage extends StatelessWidget {
           actions: [
             Obx(() => IconButton(
               onPressed: controller.isSpinning.isTrue ? null : (){
-                context.go(Routes.places);
+                context.push(Routes.places);
               },
               icon: const Icon(Icons.edit_outlined)
             ))

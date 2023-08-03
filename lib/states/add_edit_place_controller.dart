@@ -1,6 +1,5 @@
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -40,7 +39,8 @@ class AddEditPlaceController extends GetxController{
         isFetching.value = false;
       });
     } else {
-      formGroup.value = _createFormGroup();
+      formGroup.value.updateValue(_createFormGroup().value);
+      formGroup.value.markAsPristine();
     }
     stars.value = 0.0;
     isSaving.value = false;

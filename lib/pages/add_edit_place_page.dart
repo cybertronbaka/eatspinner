@@ -24,7 +24,7 @@ class AddEditPlacePage extends StatelessWidget {
       appBar: AppBar(
         leading: Obx(() => BackButton(
           onPressed: controller.isSaving.isTrue ? null : (){
-            context.go(Routes.places);
+            context.pop();
           },
         )),
         title:Text(isEdit ? 'Edit Place' : 'Add Place'),
@@ -97,7 +97,7 @@ class AddEditPlaceForm extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Place Saved Successfully'))
                           );
-                          context.go(Routes.places);
+                          context.pop();
                         }).catchError((e){
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('Error: ${e.toString()}'))

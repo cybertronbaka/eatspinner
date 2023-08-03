@@ -1,5 +1,4 @@
 import 'package:eatspinner/app/_all.dart';
-import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
@@ -19,14 +18,14 @@ class PlacesPage extends StatelessWidget {
       appBar: AppBar(
         leading: BackButton(
           onPressed: (){
-            context.go(Routes.spinner);
+            context.pop();
           },
         ),
         title: const Text('Places'),
         actions: [
           IconButton(
             onPressed: (){
-              context.go(Routes.addPlace);
+              context.push(Routes.addPlace);
             },
             icon: const Icon(Icons.add_outlined)
           )
@@ -100,7 +99,7 @@ class PlacesListView extends StatelessWidget {
             });
           },
           onEdit: (place){
-            context.go(Routes.editPlace(place.id!));
+            context.push(Routes.editPlace(place.id!));
           },
         );
       }).toList(),

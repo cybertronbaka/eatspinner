@@ -19,12 +19,20 @@ class MapWidget extends StatefulWidget{
 
 class _MapWidgetState extends State<MapWidget>{
   late MyMapController stateController;
+  late MapController mapController;
 
   @override
   void initState() {
     super.initState();
     stateController = Get.find<MyMapController>();
-    _getCurrentPosition(stateController.smallController.value);
+    mapController = MapController();
+    _getCurrentPosition();
+  }
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,7 +42,7 @@ class _MapWidgetState extends State<MapWidget>{
     return SizedBox(
       height: 200,
       child: Obx(()=> FlutterMap(
-        mapController: stateController.smallController.value,
+        mapController: mapController,
         options: MapOptions(
           center: stateController.location.value ?? defaultLatLng,
           zoom: 7,
@@ -43,7 +51,7 @@ class _MapWidgetState extends State<MapWidget>{
           keepAlive: true,
           onTap: (tapPos, location){
             stateController.location.value = location;
-            stateController.smallController.value.move(location, 17);
+            mapController.move(location, 17);
             if(widget.onMarkerPlaced != null) widget.onMarkerPlaced!(location);
           },
           plugins: [
@@ -118,7 +126,7 @@ class _MapWidgetState extends State<MapWidget>{
     );
   }
 
-  Future<void> _getCurrentPosition(MapController controller) async {
+  Future<void> _getCurrentPosition() async {
     await LocationRepo(context).getCurrentPosition()
         .then((LatLng? latLng) {
       // ref.read(RentalsMapState.locationProvider.notifier).state = position;
@@ -127,13 +135,13 @@ class _MapWidgetState extends State<MapWidget>{
       print('Position: ${latLng.latitude}, ${latLng.longitude}');
       setState(() {
         stateController.location.value = latLng;
-        controller.move(latLng, 17);
+        mapController.move(latLng, 17);
         if(widget.onMarkerPlaced != null) widget.onMarkerPlaced!(latLng);
       });
     }).catchError((e) {
       final userLocation = LatLng(27.4716, 89.6386);
       stateController.location.value = userLocation;
-      controller.move(userLocation, 17);
+      mapController.move(userLocation, 17);
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
     });
   }

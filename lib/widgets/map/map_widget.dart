@@ -3,7 +3,6 @@ import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 

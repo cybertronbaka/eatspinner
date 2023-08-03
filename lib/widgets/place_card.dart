@@ -7,8 +7,9 @@ import 'package:latlong2/latlong.dart';
 
 class PlaceCard extends StatelessWidget{
   final Place place;
+  final bool viewOnly;
 
-  const PlaceCard({super.key, required this.place});
+  const PlaceCard({super.key, required this.place, this.viewOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class PlaceCard extends StatelessWidget{
                       ],
                     ),
                   )),
-                  Expanded(child:  Column(
+                  if(!viewOnly) Expanded(child:  Column(
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,

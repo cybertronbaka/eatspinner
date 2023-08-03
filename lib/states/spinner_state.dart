@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
+import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,5 +57,25 @@ class SpinnerController extends GetxController{
   void onSpinDone(){
     print('Spinning Done!');
     isSpinning.value = false;
+    showSelectedPlace();
+  }
+
+  void showSelectedPlace(){
+    showDialog(
+      context: context,
+      builder: (context){
+        return AlertDialog(
+          title: Text(places[selectedIndex.value]!.name ?? '---'),
+          content: SizedBox(
+            height: 500,
+            width: 500,
+            child: PlaceCard(
+              place: places[selectedIndex.value]!,
+              viewOnly: true,
+            )
+          )
+        );
+      }
+    );
   }
 }

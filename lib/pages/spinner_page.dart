@@ -19,7 +19,22 @@ class SpinnerPage extends StatelessWidget {
           title: const Text('Eat Spinner', style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
             Obx(() => IconButton(
-              onPressed: controller.isSpinning.isTrue ? null : (){
+              onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
+                controller.logout().then((value){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Logged out successfully'))
+                  );
+                  context.pushReplacement(Routes.login);
+                }).catchError((e){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error: ${e.toString()}'))
+                  );
+                });
+              },
+              icon: const Icon(Icons.logout)
+            )),
+            Obx(() => IconButton(
+              onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
                 context.push(Routes.places);
               },
               icon: const Icon(Icons.edit_outlined)
@@ -77,7 +92,7 @@ class SpinnerPageBody extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: FilledButton(
-                onPressed: controller.isSpinning.isTrue || controller.canBeSpun.isFalse ? null : (){
+                onPressed: controller.isSpinning.isTrue || controller.canBeSpun.isFalse || controller.isLoggingOut.isTrue ? null : (){
                   controller.spin();
                 },
                 child: const Padding(

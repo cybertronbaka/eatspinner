@@ -8,6 +8,36 @@ import 'package:go_router/go_router.dart';
 final router = GoRouter(
   routes: [
     GoRoute(
+      path: Routes.root,
+      redirect: (context, GoRouterState state){
+        return supabase.auth.currentUser == null ? Routes.login : Routes.spinner;
+      }
+    ),
+    GoRoute(
+      path: Routes.login,
+      builder: (context, state){
+        final controller = Get.put(LoginController());
+        controller.reset();
+        return const LoginPage();
+      }
+    ),
+    GoRoute(
+      path: Routes.forgotPassword,
+      builder: (context, state){
+        final controller = Get.put(ForgotPasswordController());
+        controller.reset();
+        return const ForgotPasswordPage();
+      }
+    ),
+    GoRoute(
+      path: Routes.signup,
+      builder: (context, state){
+        final controller = Get.put(SignUpController());
+        controller.reset();
+        return const SignUpPage();
+      }
+    ),
+    GoRoute(
       path: Routes.spinner,
       builder: (context, state){
         final controller = Get.put(SpinnerController(context));

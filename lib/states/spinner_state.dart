@@ -45,6 +45,7 @@ class SpinnerController extends GetxController{
   }
 
   void fetchNearby(){
+    while(!context.mounted){}
     LocationRepo(context).getCurrentPosition().then((value){
       if(value == null) {
         return;

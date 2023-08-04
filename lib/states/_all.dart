@@ -5,3 +5,4 @@ export 'add_edit_place_controller.dart';
 export 'login_controller.dart';
 export 'sign_up_controller.dart';
 export 'forgot_password_controller.dart';
+export 'reset_password_controller.dart';

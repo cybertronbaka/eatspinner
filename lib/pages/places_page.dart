@@ -99,7 +99,7 @@ class PlacesListView extends StatelessWidget {
             });
           },
           onEdit: (place){
-            context.push(Routes.editPlace(place.id!));
+            context.pushNamed(Routes.editPlace, pathParameters: {'id': place.id!.toString()});
           },
         );
       }).toList(),

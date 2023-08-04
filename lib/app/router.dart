@@ -1,5 +1,6 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/pages/_all.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -9,8 +10,19 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: Routes.root,
-      redirect: (context, GoRouterState state){
+      redirect: (context, GoRouterState state) async {
+        final deeplinkedRoute = await DeepLinkService.handleOnStart();
+        if(deeplinkedRoute != null) return deeplinkedRoute;
+
         return supabase.auth.currentUser == null ? Routes.login : Routes.spinner;
+      }
+    ),
+    GoRoute(
+      path: Routes.resetPassword,
+      builder: (context, state){
+        final controller = Get.put(ResetPasswordController());
+        controller.reset();
+        return const ResetPasswordPage();
       }
     ),
     GoRoute(
@@ -48,7 +60,7 @@ final router = GoRouter(
     GoRoute(
       path: Routes.places,
       builder: (context, state){
-        final controller = Get.put(PlacesController());
+        final controller = Get.put(PlacesController(context));
         controller.reset(true);
         return const PlacesPage();
       },
@@ -64,7 +76,7 @@ final router = GoRouter(
       }
     ),
     GoRoute(
-      path: Routes.editPlace(),
+      path: Routes.editPlace,
       redirect: (context, GoRouterState state){
         final id = state.pathParameters['id'];
         if(id == null || id == ':id')  return '404';

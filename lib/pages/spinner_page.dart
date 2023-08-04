@@ -1,14 +1,26 @@
 import 'package:eatspinner/app/_all.dart';
+import 'package:eatspinner/services/deep_link_service.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shimmer/shimmer.dart';
 
-class SpinnerPage extends StatelessWidget {
+class SpinnerPage extends StatefulWidget{
   const SpinnerPage({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _SpinnerPageState();
+}
+
+class _SpinnerPageState extends State<SpinnerPage> {
+
+  @override
+  void initState() {
+    DeepLinkService.handleOnRunning(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,32 +31,32 @@ class SpinnerPage extends StatelessWidget {
           title: const Text('Eat Spinner', style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
             Obx(() => IconButton(
-              onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
-                controller.logout().then((value){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Logged out successfully'))
-                  );
-                  context.pushReplacement(Routes.login);
-                }).catchError((e){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error: ${e.toString()}'))
-                  );
-                });
-              },
-              icon: const Icon(Icons.logout)
+                onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
+                  controller.logout().then((value){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Logged out successfully'))
+                    );
+                    context.pushReplacement(Routes.login);
+                  }).catchError((e){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error: ${e.toString()}'))
+                    );
+                  });
+                },
+                icon: const Icon(Icons.logout)
             )),
             Obx(() => IconButton(
-              onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
-                context.push(Routes.places);
-              },
-              icon: const Icon(Icons.edit_outlined)
+                onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
+                  context.push(Routes.places);
+                },
+                icon: const Icon(Icons.edit_outlined)
             ))
           ],
         ),
         body: Obx(
-          () => controller.isFetching.isFalse
-            ?  const SpinnerPageBody()
-            : const SpinnerShimmer()
+                () => controller.isFetching.isFalse
+                ?  const SpinnerPageBody()
+                : const SpinnerShimmer()
         )
     );
   }

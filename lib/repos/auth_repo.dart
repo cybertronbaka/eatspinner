@@ -1,4 +1,5 @@
 import 'package:eatspinner/app/globals.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpParams{
   final String email;
@@ -54,6 +55,13 @@ class AuthRepo {
   }
 
   Future<void> resetPassword(String email) async {
-    await supabase.auth.resetPasswordForEmail(email);
+    await supabase.auth.resetPasswordForEmail(
+      email,
+      redirectTo: 'com.example.eatspinner://resetpassword/'
+    );
+  }
+
+  Future<void> updatePassword(String password) async {
+    await supabase.auth.updateUser(UserAttributes(password: password));
   }
 }

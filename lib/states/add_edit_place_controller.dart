@@ -12,7 +12,8 @@ FormGroup _createFormGroup([Place? place]){
     'lat': [place?.lat ?? 0.0, Validators.required],
     'lon': [place?.lon ?? 0.0,  Validators.required],
     'rating': [place?.rating ?? 0.0, Validators.required, Validators.min(0), Validators.max(5)],
-    'creator_id': [place?.creatorId ?? '']
+    'creator_id': [place?.creatorId ?? ''],
+    'created_at': [place?.createdAt]
   });
 }
 

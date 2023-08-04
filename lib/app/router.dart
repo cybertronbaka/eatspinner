@@ -1,5 +1,6 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/pages/_all.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,47 @@ import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
   routes: [
+    GoRoute(
+      path: Routes.root,
+      redirect: (context, GoRouterState state) async {
+        final deeplinkedRoute = await DeepLinkService.handleOnStart();
+        if(deeplinkedRoute != null) return deeplinkedRoute;
+
+        return supabase.auth.currentUser == null ? Routes.login : Routes.spinner;
+      }
+    ),
+    GoRoute(
+      path: Routes.resetPassword,
+      builder: (context, state){
+        final controller = Get.put(ResetPasswordController());
+        controller.reset();
+        return const ResetPasswordPage();
+      }
+    ),
+    GoRoute(
+      path: Routes.login,
+      builder: (context, state){
+        final controller = Get.put(LoginController());
+        controller.reset();
+        return const LoginPage();
+      }
+    ),
+    GoRoute(
+      path: Routes.forgotPassword,
+      builder: (context, state){
+        final controller = Get.put(ForgotPasswordController());
+        controller.reset();
+        return const ForgotPasswordPage();
+      }
+    ),
+    GoRoute(
+      path: Routes.signup,
+      builder: (context, state){
+        final controller = Get.put(SignUpController());
+        controller.reset();
+        return const SignUpPage();
+      }
+    ),
     GoRoute(
       path: Routes.spinner,
       builder: (context, state){
@@ -18,7 +60,7 @@ final router = GoRouter(
     GoRoute(
       path: Routes.places,
       builder: (context, state){
-        final controller = Get.put(PlacesController());
+        final controller = Get.put(PlacesController(context));
         controller.reset(true);
         return const PlacesPage();
       },
@@ -34,7 +76,7 @@ final router = GoRouter(
       }
     ),
     GoRoute(
-      path: Routes.editPlace(),
+      path: Routes.editPlace,
       redirect: (context, GoRouterState state){
         final id = state.pathParameters['id'];
         if(id == null || id == ':id')  return '404';

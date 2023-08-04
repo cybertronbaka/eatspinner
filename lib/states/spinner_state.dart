@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
+import 'package:eatspinner/repos/auth_repo.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
@@ -18,6 +19,7 @@ class SpinnerController extends GetxController{
   Rx<bool> isSpinning = false.obs;
   Rx<bool> isFetching = false.obs;
   Rx<bool> canBeSpun = true.obs;
+  Rx<bool> isLoggingOut = false.obs;
 
   void spin(){
     if(isSpinning.isTrue) return;
@@ -43,6 +45,7 @@ class SpinnerController extends GetxController{
   }
 
   void fetchNearby(){
+    while(!context.mounted){}
     LocationRepo(context).getCurrentPosition().then((value){
       if(value == null) {
         return;
@@ -89,5 +92,16 @@ class SpinnerController extends GetxController{
           )
       );
     });
+  }
+
+  Future<void> logout() async {
+    isLoggingOut.value = true;
+    try {
+      await AuthRepo().signOut();
+      isLoggingOut.value = false;
+    } catch(e){
+      isLoggingOut.value = false;
+      rethrow;
+    }
   }
 }

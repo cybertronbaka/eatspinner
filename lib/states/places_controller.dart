@@ -10,7 +10,8 @@ FormGroup _createFormGroup(){
 }
 
 class PlacesController extends GetxController{
-  PlacesController();
+  BuildContext context;
+  PlacesController(this.context);
 
   FormGroup formGroup = _createFormGroup();
   RxList places = RxList([]);
@@ -35,6 +36,7 @@ class PlacesController extends GetxController{
 
   Future<void> fetchMany() async {
     isFetching.value = true;
+    while(!context.mounted) {}
     PlaceRepo().fetchMany().then((value){
       places.value = value;
       isFetching.value = false;

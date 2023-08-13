@@ -17,6 +17,11 @@ class ProfileMenuPage extends StatelessWidget{
               const ProfileCard(),
               const SizedBox(height: 10),
               ProfileMenuItem(
+                title: 'View Profile',
+                icon: const Icon(Icons.visibility_outlined, color: Color(0xFF626262)),
+                onTap: (){},
+              ),
+              ProfileMenuItem(
                 title: 'Eat Spinner',
                 icon: const Icon(Icons.gamepad_outlined, color: Color(0xFF626262)),
                 onTap: (){},

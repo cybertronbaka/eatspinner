@@ -1,6 +1,5 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/pages/_all.dart';
-import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,7 @@ final router = GoRouter(
     GoRoute(
       path: Routes.root,
       redirect: (context, GoRouterState state) async {
-        final deeplinkedRoute = await DeepLinkService.handleOnStart();
+        final deeplinkedRoute = await dLink.handleOnStart();
         if(deeplinkedRoute != null) return deeplinkedRoute;
 
         return supabase.auth.currentUser == null ? Routes.login : Routes.spinner;
@@ -58,7 +57,7 @@ final router = GoRouter(
     GoRoute(
       path: Routes.spinner,
       builder: (context, state){
-        final controller = Get.put(SpinnerController(context));
+        final controller = Get.put(SpinnerController());
         controller.reset();
         return const SpinnerPage();
       },

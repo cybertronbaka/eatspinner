@@ -10,8 +10,7 @@ import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 
 class SpinnerController extends GetxController{
-  BuildContext context;
-  SpinnerController(this.context);
+  SpinnerController();
 
   RxList places = RxList([]);
   Rx<StreamController<int>> fortuneStream = StreamController<int>().obs;
@@ -41,11 +40,9 @@ class SpinnerController extends GetxController{
     isSpinning.value = false;
     isFetching.value = true;
     canBeSpun.value = true;
-    fetchNearby();
   }
 
-  void fetchNearby(){
-    while(!context.mounted){}
+  void fetchNearby(BuildContext context){
     LocationRepo(context).getCurrentPosition().then((value){
       if(value == null) {
         return;

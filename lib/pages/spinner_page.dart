@@ -18,13 +18,14 @@ class _SpinnerPageState extends State<SpinnerPage> {
 
   @override
   void initState() {
-    DeepLinkService.handleOnRunning(context);
+    dLink.handleOnRunning(context, 'spinner');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<SpinnerController>();
+    controller.fetchNearby(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -48,6 +49,7 @@ class _SpinnerPageState extends State<SpinnerPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Logged out successfully'))
                     );
+                    dLink.blockRunning('spinner');
                     context.pushReplacement(Routes.login);
                   }).catchError((e){
                     ScaffoldMessenger.of(context).showSnackBar(

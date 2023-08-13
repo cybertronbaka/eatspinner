@@ -1,5 +1,4 @@
 import 'package:eatspinner/app/_all.dart';
-import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +17,8 @@ class LoginPage extends StatefulWidget{
 class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
-    DeepLinkService.handleOnRunning(context);
+    dLink.handleOnRunning(context, 'login');
     super.initState();
-  }
-
-  @override
-  void deactivate() {
-    DeepLinkService.blockRunning();
-    super.deactivate();
   }
 
   @override
@@ -83,16 +76,25 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: 'Password',
                     ),
                     ReactiveFormConsumer(
-                      builder: (context, fg, _){
+                      builder: (ctx, fg, _){
 
                         return Obx(()=> EsFilledButton(
                           onPressed: controller.isLoggingIn.isTrue || fg.invalid ? null : (){
                             controller.login().then((value){
+                              print('HEREEEE');
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Logged in successfully'))
+                                const SnackBar(content: Text('Logged in successfully'))
                               );
+                              dLink.blockRunning('login');
                               context.pushReplacement(Routes.spinner);
                             }).catchError((e){
+                              if(e.toString().contains('Failed host lookup')){
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Something went wrong in the server!'))
+                                );
+                                return;
+                              }
+                              print('ERROR: ${e.toString()}');
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Invalid email or password'))
                               );
@@ -102,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                         ));
                       },
                     ),
-                    Divider(),
+                    const Divider(),
                     GestureDetector(
                         onTap: (){
                           context.push(Routes.forgotPassword);

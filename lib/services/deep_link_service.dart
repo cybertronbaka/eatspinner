@@ -6,11 +6,18 @@ import 'package:go_router/go_router.dart';
 import 'package:uni_links/uni_links.dart';
 
 class DeepLinkService {
-  static bool _blockStream = false;
-  static bool _gotInitialUri = false;
-  static StreamSubscription<Uri?>? _subscription;
+  bool _blockStream = false;
+  bool _gotInitialUri = false;
+  StreamSubscription<Uri?>? _subscription;
+  String key = '';
 
-  static void handleOnRunning(BuildContext context){
+  Future<void> handleOnRunning(BuildContext context, String newKey) async {
+    while(key != '') {
+      print('Waiting for $key to be released for $newKey');
+    }
+
+    print('_---------------HANDLE ON RUNNING on $newKey');
+    key = newKey;
     _blockStream = false;
     _subscription = uriLinkStream.listen((initialUri) {});
     _subscription!.onData((data) {
@@ -24,11 +31,16 @@ class DeepLinkService {
     });
   }
 
-  static void blockRunning(){
-    _blockStream = true;
+  Future<void> blockRunning(String newKey) async {
+    print('_---------------BLOCK RUNNING on $newKey and key == newKey -> ${key == newKey}');
+    if(key == newKey){
+      _blockStream = true;
+      key = '';
+      print('_---------------BLOCK RUNNING on $newKey');
+    }
   }
 
-  static Future<String?> handleOnStart() async{
+  Future<String?> handleOnStart() async{
     if(_gotInitialUri) return null;
 
     _gotInitialUri = true;
@@ -42,7 +54,7 @@ class DeepLinkService {
     return null;
   }
 
-  static String? _handleDeepLinks(Uri? uri){
+  String? _handleDeepLinks(Uri? uri){
     if (uri != null) {
       final newUri = Uri.parse(uri.toString().replaceAll('/#', '?'));
       if (newUri.scheme == 'com.example.eatspinner' && newUri.host == 'resetpassword') {
@@ -53,5 +65,6 @@ class DeepLinkService {
         return Routes.resetPassword;
       }
     }
+    return null;
   }
 }

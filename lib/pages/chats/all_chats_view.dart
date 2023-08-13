@@ -6,8 +6,14 @@ class AllChatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: List.generate(40, (index) => const EsChatCard()),
+    return Scaffold(
+      body: ListView(
+        children: List.generate(40, (index) => const EsChatCard()),
+      ),
+      floatingActionButton: FloatingActionButton.small(
+        onPressed: (){},
+        child: const Icon(Icons.add_outlined),
+      ),
     );
   }
 }

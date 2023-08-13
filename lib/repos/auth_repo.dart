@@ -1,4 +1,6 @@
 import 'package:eatspinner/app/globals.dart';
+import 'package:eatspinner/models/profile/profile.dart';
+import 'package:eatspinner/repos/_all.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpParams{
@@ -42,16 +44,32 @@ class AuthRepo {
   }
 
   Future<void> signUp(SignUpParams params) async {
-    await supabase.auth.signUp(
-      email: params.email.trim(),
-      password: params.password,
-      data: {
-        'email': params.email.trim(),
-        'name': params.name,
-        'age': params.age,
-        'gender': params.gender
+    final email = params.email.trim();
+    Profile? profile;
+    bool signedIn = false;
+    try {
+      profile = await ProfileRepo().create(Profile(
+          userId: 'tmp',
+          email: email,
+          name: params.name,
+          age: params.age,
+          gender: params.gender
+      ));
+      final authRes = await supabase.auth.signUp(
+        email: email,
+        password: params.password,
+      );
+      signedIn = true;
+      profile = await ProfileRepo().update(profile.copyWith(userId: authRes.user!.id));
+    } catch(e) {
+      if(profile != null) {
+        await ProfileRepo().delete(profile.id!);
       }
-    );
+      if(true){
+        supabase.auth.signOut();
+      }
+      rethrow;
+    }
   }
 
   Future<void> resetPassword(String email) async {

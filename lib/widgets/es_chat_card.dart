@@ -19,17 +19,21 @@ class EsChatCard extends StatelessWidget{
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            const Expanded(
+            Expanded(
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage(
+                    radius: 60,
+                    child: ClipOval(
+                      child: Image.asset(
                         'assets/images/icon.png',
-                      )
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 )
             ),
+            const SizedBox(width: 10),
             Expanded(
               flex: 5,
               child: SpacedColumn(

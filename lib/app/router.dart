@@ -42,6 +42,12 @@ final router = GoRouter(
       }
     ),
     GoRoute(
+      path: Routes.forgotPasswordSent,
+      builder: (context, state){
+        return const ForgotPasswordSentPage();
+      }
+    ),
+    GoRoute(
       path: Routes.signup,
       builder: (context, state){
         final controller = Get.put(SignUpController());

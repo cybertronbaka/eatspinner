@@ -36,7 +36,8 @@ class EsTextField<T> extends StatelessWidget{
       decoration: InputDecoration(
         labelText: labelText,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(6),
+          borderSide: const BorderSide(color: Color(0xFF626262))
         ),
         suffixIcon: suffixIcon
       ),

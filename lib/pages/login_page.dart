@@ -3,6 +3,7 @@ import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -32,23 +33,50 @@ class _LoginPageState extends State<LoginPage> {
     final controller = Get.find<LoginController>();
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: ReactiveForm(
-          formGroup: controller.formGroup,
-          child: Center(
+        body: SafeArea(
+          child: ReactiveForm(
+            formGroup: controller.formGroup,
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: SpacedColumn(
                   spaceHeight: 20,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      'assets/images/login_image.jpg',
-                      fit: BoxFit.fitWidth,
+                    const SizedBox(height: 10),
+                    const SpacedColumn(
+                      spaceHeight: 8,
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                              'Sign in',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20
+                              )
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                              'You can add friends and start having conversations',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xFF626262)
+                              )
+                          ),
+                        ),
+                      ],
+                    ),
+                    SvgPicture.asset(
+                        'assets/images/cat_with_hat.svg',
+                        semanticsLabel: 'No Data'
                     ),
                     const EsTextField(
                       formControlName: 'email',
                       labelText: 'Email',
+                      suffixIcon: Icon(Icons.email_outlined),
                     ),
                     const EsPasswordField(
                       formControlName: 'password',
@@ -56,46 +84,35 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ReactiveFormConsumer(
                       builder: (context, fg, _){
-                        return SizedBox(
-                          width: 1000,
-                          child: Obx(() => FilledButton(
-                              onPressed: controller.isLoggingIn.isTrue || fg.invalid ? null : (){
-                                controller.login().then((value){
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Logged in successfully'))
-                                  );
-                                  context.pushReplacement(Routes.spinner);
-                                }).catchError((e){
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Invalid email or password'))
-                                  );
-                                });
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Text('Login'),
-                              )
-                          )),
-                        );
+
+                        return Obx(()=> EsFilledButton(
+                          onPressed: controller.isLoggingIn.isTrue || fg.invalid ? null : (){
+                            controller.login().then((value){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Logged in successfully'))
+                              );
+                              context.pushReplacement(Routes.spinner);
+                            }).catchError((e){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Invalid email or password'))
+                              );
+                            });
+                          },
+                          labelText: 'LOGIN',
+                        ));
                       },
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("Forgot your password? "),
-                        GestureDetector(
-                            onTap: (){
-                              context.push(Routes.forgotPassword);
-                            },
-                            child: const Text(
-                                'Click here',
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold
-                                )
+                    GestureDetector(
+                        onTap: (){
+                          context.push(Routes.forgotPassword);
+                        },
+                        child: const Text(
+                            'Forgot your password?',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold
                             )
                         )
-                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

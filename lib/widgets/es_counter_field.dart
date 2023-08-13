@@ -29,22 +29,20 @@ class EsCounterField<T> extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-                flex: 3, child: EsTextField(
+            Expanded(flex: 3, child: EsTextField(
               readOnly: readOnly,
               formControlName: formControlName,
               labelText: labelText,
-            )
-            ),
-            SizedBox(width: 8),
+            )),
+            const SizedBox(width: 8),
             Expanded(
                 flex: 1, child: ReactiveValueListenableBuilder(
                 formControlName: formControlName,
                 builder: (context, control, child){
                   return Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(10)
+                      border: Border.all(color: const Color(0xFFC6C6C6)),
+                      borderRadius: BorderRadius.circular(6)
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -82,7 +80,7 @@ class EsCounterField<T> extends StatelessWidget {
 
       control.updateValue(control.value + step);
     },
-        child: Icon(icon, size: 20, color: disabled ? Colors.grey : Colors.black)
+        child: Icon(icon, size: 20, color: disabled ? const Color(0xFFc6c6c6) : const Color(0xFF626262))
     );
   }
 }

@@ -12,24 +12,26 @@ class EatSpinnerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Eat Spinner',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFF2F2F2),
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          color: Color(0xFFF5F5F5)
+          color: Colors.white,
+          elevation: 0,
+          foregroundColor: Colors.black
         ),
-        colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: Colors.black,
-          onPrimary: Colors.white,
-          secondary: Colors.white,
-          onSecondary: Colors.black,
-          error: Colors.red,
-          onError: Colors.white,
-          background: Colors.white,
-          onBackground: Colors.black,
-          surface: Colors.white,
-          onSurface: Colors.black,
-        ),
-        useMaterial3: true
+        // colorScheme: const ColorScheme(
+        //   brightness: Brightness.light,
+        //   primary: Colors.black,
+        //   onPrimary: Colors.white,
+        //   secondary: Colors.white,
+        //   onSecondary: Colors.black,
+        //   error: Colors.red,
+        //   onError: Colors.white,
+        //   background: Colors.white,
+        //   onBackground: Colors.black,
+        //   surface: Colors.white,
+        //   onSurface: Colors.black,
+        // ),
+        // useMaterial3: true
       ),
       routerConfig: router,
     );

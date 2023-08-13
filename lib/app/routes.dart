@@ -7,6 +7,7 @@ class Routes{
   static const signup = '/auth/signup';
   static const login = '/auth/login';
   static const forgotPassword = '/auth/forgotPassword';
+  static const forgotPasswordSent = '/auth/forgotPasswordSent';
   static const resetPassword = '/resetpassword';
   static const notFound = '/notFound';
   static const profile = '/profile';

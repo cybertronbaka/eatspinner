@@ -1,5 +1,7 @@
+import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileMenuPage extends StatelessWidget{
   const ProfileMenuPage({super.key});
@@ -21,9 +23,11 @@ class ProfileMenuPage extends StatelessWidget{
               onTap: (){},
             ),
             ProfileMenuItem(
-              title: 'Eat Spinner',
+              title: 'Play Eat Spinner',
               icon: const Icon(Icons.gamepad_outlined, color: Color(0xFF626262)),
-              onTap: (){},
+              onTap: (){
+                context.push(Routes.spinner);
+              },
             ),
             ProfileMenuItem(
               title: 'Share Profile Link',
@@ -41,3 +45,4 @@ class ProfileMenuPage extends StatelessWidget{
     );
   }
 }
+

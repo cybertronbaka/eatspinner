@@ -30,11 +30,11 @@ class SpinnerShimmer extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Container(
-              height: 40,
+              height: 60,
               decoration: const BoxDecoration(
                   color: Colors.grey,
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(50))
+                  borderRadius: BorderRadius.all(Radius.circular(6))
               ),
             ),
           ),

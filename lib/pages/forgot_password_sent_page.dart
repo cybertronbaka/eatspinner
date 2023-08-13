@@ -48,7 +48,8 @@ class ForgotPasswordSentPage extends StatelessWidget {
                           )
                       ),
                     ],
-                  )
+                  ),
+                  Divider()
                 ],
               ),
             ),

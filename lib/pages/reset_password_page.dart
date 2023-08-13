@@ -72,6 +72,7 @@ class ResetPasswordPage extends StatelessWidget {
                       ));
                     },
                   ),
+                  const Divider()
                 ],
               ),
             ),

@@ -79,6 +79,7 @@ class ForgotPasswordPage extends StatelessWidget {
                         ));
                       },
                     ),
+                    const Divider()
                   ],
                 ),
               ),

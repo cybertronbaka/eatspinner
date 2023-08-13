@@ -9,6 +9,11 @@ class EatSpinnerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      scrollBehavior: ScrollConfiguration.of(context).copyWith(
+        physics: const BouncingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       title: 'Eat Spinner',
       theme: ThemeData(
@@ -18,6 +23,10 @@ class EatSpinnerApp extends StatelessWidget {
           elevation: 0,
           foregroundColor: Colors.black
         ),
+        dividerTheme: const DividerThemeData(
+          color: Color(0xFFCACACA),
+          thickness: 1
+        )
         // colorScheme: const ColorScheme(
         //   brightness: Brightness.light,
         //   primary: Colors.black,

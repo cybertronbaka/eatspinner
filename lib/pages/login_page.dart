@@ -102,6 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                         ));
                       },
                     ),
+                    Divider(),
                     GestureDetector(
                         onTap: (){
                           context.push(Routes.forgotPassword);

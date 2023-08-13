@@ -23,7 +23,7 @@ class SignUpPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: SpacedColumn(
-                spaceHeight: 20,
+                spaceHeight: 15,
                 children: [
                   const SpacedColumn(
                     spaceHeight: 5,
@@ -109,6 +109,7 @@ class SignUpPage extends StatelessWidget {
                       ));
                     },
                   ),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

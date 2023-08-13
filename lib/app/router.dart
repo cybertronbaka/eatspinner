@@ -13,7 +13,7 @@ final router = GoRouter(
         final deeplinkedRoute = await dLink.handleOnStart();
         if(deeplinkedRoute != null) return deeplinkedRoute;
 
-        return supabase.auth.currentUser == null ? Routes.login : Routes.spinner;
+        return supabase.auth.currentUser == null ? Routes.login : Routes.chatsHome;
       }
     ),
     GoRoute(
@@ -60,6 +60,12 @@ final router = GoRouter(
         final controller = Get.put(SpinnerController());
         controller.reset();
         return const SpinnerPage();
+      },
+    ),
+    GoRoute(
+      path: Routes.chatsHome,
+      builder: (context, state){
+        return const ChatsHomePage();
       },
     ),
     GoRoute(

@@ -11,4 +11,5 @@ class Routes{
   static const resetPassword = '/resetpassword';
   static const notFound = '/notFound';
   static const profile = '/profile';
+  static const chatsHome = '/messenger';
 }

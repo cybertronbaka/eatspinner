@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                                 const SnackBar(content: Text('Logged in successfully'))
                               );
                               dLink.blockRunning('login');
-                              context.pushReplacement(Routes.spinner);
+                              context.pushReplacement(Routes.root);
                             }).catchError((e){
                               if(e.toString().contains('Failed host lookup')){
                                 ScaffoldMessenger.of(context).showSnackBar(

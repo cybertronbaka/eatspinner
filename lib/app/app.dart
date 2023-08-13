@@ -21,7 +21,7 @@ class EatSpinnerApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           color: Colors.white,
           elevation: 0,
-          foregroundColor: Colors.black
+          foregroundColor: Color(0xFF3D3D3C)
         ),
         dividerTheme: const DividerThemeData(
           color: Color(0xFFCACACA),

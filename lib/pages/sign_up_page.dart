@@ -97,7 +97,7 @@ class SignUpPage extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('Signed Up in successfully'))
                             );
-                            context.pushReplacement(Routes.spinner);
+                            context.pushReplacement(Routes.root);
                           }).catchError((e){
                             print('Error: ${e.toString()}');
                             ScaffoldMessenger.of(context).showSnackBar(

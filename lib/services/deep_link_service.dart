@@ -45,8 +45,6 @@ class DeepLinkService {
   static String? _handleDeepLinks(Uri? uri){
     if (uri != null) {
       final newUri = Uri.parse(uri.toString().replaceAll('/#', '?'));
-      print('****************************************URI:::: ${newUri.toString()}');
-      print('****************************************DATA:::: ${newUri.queryParameters}');
       if (newUri.scheme == 'com.example.eatspinner' && newUri.host == 'resetpassword') {
         print('***********ERROR? : ${newUri.queryParameters['error']}');
         if(newUri.queryParameters['error'] != null){

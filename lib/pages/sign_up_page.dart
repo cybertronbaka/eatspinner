@@ -77,6 +77,7 @@ class SignUpPage extends StatelessWidget {
                               );
                               context.pushReplacement(Routes.spinner);
                             }).catchError((e){
+                              print('Error: ${e.toString()}');
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('Error: ${e.toString()}'))
                               );

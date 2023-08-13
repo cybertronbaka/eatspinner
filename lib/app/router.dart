@@ -91,6 +91,14 @@ final router = GoRouter(
         mapController.reset();
         return AddEditPlacePage(isEdit: true, id: id);
       }
-    )
+    ),
+    GoRoute(
+      path: Routes.profile,
+      builder: (context, state){
+        final controller = Get.put(ProfileController());
+        controller.reset();
+        return const ProfilePage();
+      },
+    ),
   ],
 );

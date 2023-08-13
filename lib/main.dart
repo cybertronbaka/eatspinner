@@ -8,7 +8,7 @@ void main() async {
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL']!,
     anonKey: dotenv.env['SUPABASE_API_KEY']!,
-    debug: true
+    // debug: true
   );
   runApp(const EatSpinnerApp());
 }

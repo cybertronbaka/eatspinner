@@ -9,4 +9,5 @@ class Routes{
   static const forgotPassword = '/auth/forgotPassword';
   static const resetPassword = '/resetpassword';
   static const notFound = '/notFound';
+  static const profile = '/profile';
 }

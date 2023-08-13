@@ -31,6 +31,18 @@ class _SpinnerPageState extends State<SpinnerPage> {
           title: const Text('Eat Spinner', style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
             Obx(() => IconButton(
+              onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
+                context.push(Routes.profile);
+              },
+              icon: const Icon(Icons.person_outline_outlined)
+            )),
+            Obx(() => IconButton(
+                onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
+                  context.push(Routes.places);
+                },
+                icon: const Icon(Icons.edit_outlined)
+            )),
+            Obx(() => IconButton(
                 onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
                   controller.logout().then((value){
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -45,12 +57,6 @@ class _SpinnerPageState extends State<SpinnerPage> {
                 },
                 icon: const Icon(Icons.logout)
             )),
-            Obx(() => IconButton(
-                onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
-                  context.push(Routes.places);
-                },
-                icon: const Icon(Icons.edit_outlined)
-            ))
           ],
         ),
         body: Obx(

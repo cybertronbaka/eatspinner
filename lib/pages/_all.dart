@@ -8,3 +8,4 @@ export 'reset_password_page.dart';
 export 'profile_page.dart';
 export 'forgot_password_sent_page.dart';
 export 'chats/_all.dart';
+export 'profile_menu_page.dart';

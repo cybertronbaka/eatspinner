@@ -2,6 +2,7 @@ import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/pages/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatsHomePage extends StatefulWidget{
   const ChatsHomePage({super.key});
@@ -46,7 +47,7 @@ class _ChatsHomePageState extends State<ChatsHomePage>{
           ),
           IconButton(
             onPressed: (){
-
+              context.push(Routes.profileMenu);
             },
             icon: const Icon(Icons.menu_outlined)
           )

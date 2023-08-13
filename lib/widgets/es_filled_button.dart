@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 class EsFilledButton extends StatelessWidget{
   final void Function()? onPressed;
   final String? labelText;
+  final double width;
 
   const EsFilledButton({
     super.key,
     this.onPressed,
-    this.labelText
+    this.labelText,
+    this.width = 1000
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 1000,
+      width: width,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(

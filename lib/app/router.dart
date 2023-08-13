@@ -111,5 +111,11 @@ final router = GoRouter(
         return const ProfilePage();
       },
     ),
+    GoRoute(
+      path: Routes.profileMenu,
+      builder: (context, state){
+        return const ProfileMenuPage();
+      },
+    ),
   ],
 );

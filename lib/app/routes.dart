@@ -12,4 +12,5 @@ class Routes{
   static const notFound = '/notFound';
   static const profile = '/profile';
   static const chatsHome = '/messenger';
+  static const profileMenu = '/profileMenu';
 }

@@ -123,8 +123,23 @@ class NoDataWidget extends StatelessWidget{
             SizedBox(
               height: 250,
               child: SvgPicture.asset(
-                'assets/images/nodata.svg',
+                'assets/images/no_places.svg',
                 semanticsLabel: 'No Data'
+              ),
+            ),
+            const Text(
+              'No places found',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18
+              ),
+            ),
+            const SizedBox(height: 5),
+            const Text(
+              'Please add places for the spinner',
+              style: TextStyle(
+                fontSize: 14,
+                color: Color(0xFF626262)
               ),
             )
           ]

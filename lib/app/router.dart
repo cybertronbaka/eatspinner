@@ -9,6 +9,7 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: Routes.root,
+      name: Routes.root,
       redirect: (context, GoRouterState state) async {
         final deeplinkedRoute = await dLink.handleOnStart();
         if(deeplinkedRoute != null) return deeplinkedRoute;
@@ -18,7 +19,8 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.resetPassword,
-      builder: (context, state){
+      name: Routes.resetPassword,
+        builder: (context, state){
         final controller = Get.put(ResetPasswordController());
         controller.reset();
         return const ResetPasswordPage();
@@ -26,7 +28,8 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.login,
-      builder: (context, state){
+      name: Routes.login,
+        builder: (context, state){
         final controller = Get.put(LoginController());
         controller.reset();
         return const LoginPage();
@@ -42,13 +45,15 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.forgotPasswordSent,
-      builder: (context, state){
+      name: Routes.forgotPasswordSent,
+        builder: (context, state){
         return const ForgotPasswordSentPage();
       }
     ),
     GoRoute(
       path: Routes.signup,
-      builder: (context, state){
+      name: Routes.signup,
+        builder: (context, state){
         final controller = Get.put(SignUpController());
         controller.reset();
         return const SignUpPage();
@@ -64,21 +69,24 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.chatsHome,
+      name: Routes.chatsHome,
       builder: (context, state){
         return const ChatsHomePage();
       },
     ),
     GoRoute(
       path: Routes.places,
+      name: Routes.places,
       builder: (context, state){
-        final controller = Get.put(PlacesController(context));
+        final controller = Get.put(PlacesController());
         controller.reset(true);
         return const PlacesPage();
       },
     ),
     GoRoute(
       path: Routes.addPlace,
-      builder: (BuildContext context, GoRouterState state){
+      name: Routes.addPlace,
+        builder: (BuildContext context, GoRouterState state){
         final mapController = Get.put(MyMapController());
         final controller = Get.put(AddEditPlaceController());
         mapController.reset();
@@ -88,7 +96,8 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.editPlace,
-      redirect: (context, GoRouterState state){
+      name: Routes.editPlace,
+        redirect: (context, GoRouterState state){
         final id = state.pathParameters['id'];
         if(id == null || id == ':id')  return '404';
 
@@ -105,6 +114,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.profile,
+      name: Routes.profile,
       builder: (context, state){
         final controller = Get.put(ProfileController());
         controller.reset();
@@ -113,6 +123,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.profileMenu,
+      name: Routes.profileMenu,
       builder: (context, state){
         return const ProfileMenuPage();
       },

@@ -7,7 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 void main() async {
   await dotenv.load(fileName: ".env");
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.white, // navigation bar color
+    systemNavigationBarColor: Colors.black, // navigation bar color
     statusBarColor: Colors.white, // status bar color
   ));
   await Supabase.initialize(

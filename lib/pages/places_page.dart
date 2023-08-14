@@ -13,11 +13,14 @@ class PlacesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<PlacesController>();
+    controller.initList();
 
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
           onPressed: (){
+            final spinnerController = Get.find<SpinnerController>();
+            spinnerController.fetchNearby(context);
             context.pop();
           },
         ),

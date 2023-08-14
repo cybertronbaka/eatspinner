@@ -16,8 +16,8 @@ class SpinnerController extends GetxController{
   Rx<StreamController<int>> fortuneStream = StreamController<int>().obs;
   Rx<int> selectedIndex = 0.obs;
   Rx<bool> isSpinning = false.obs;
-  Rx<bool> isFetching = false.obs;
-  Rx<bool> canBeSpun = true.obs;
+  Rx<bool> isFetching = true.obs;
+  Rx<bool> canBeSpun = false.obs;
   Rx<bool> isLoggingOut = false.obs;
 
   void spin(){
@@ -37,9 +37,6 @@ class SpinnerController extends GetxController{
   void reset(){
     fortuneStream.value = StreamController<int>();
     selectedIndex.value = 0;
-    isSpinning.value = false;
-    isFetching.value = true;
-    canBeSpun.value = true;
   }
 
   void fetchNearby(BuildContext context){
@@ -56,6 +53,7 @@ class SpinnerController extends GetxController{
           canBeSpun.value = false;
         } else {
           places.value = value;
+          canBeSpun.value = true;
         }
         isFetching.value = false;
       }).catchError((error){

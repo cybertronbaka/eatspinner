@@ -18,7 +18,12 @@ class ProfileMenuItem extends StatelessWidget{
       onTap: onTap,
       child: Container(
         height: 60,
-        color: const Color(0xFFFAF9F9),
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: const Color(0xFFF5F4F4)),
+          color: const Color(0xFFFAF9F9),
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
           children: [

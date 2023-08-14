@@ -17,3 +17,6 @@ export 'es_contact_card.dart';
 export 'profile_card.dart';
 export 'profile_menu_item.dart';
 export 'custom_spinner_indicator.dart';
+export 'es_circular_icon_button.dart';
+export 'cover_photo.dart';
+export 'profile_photo.dart';

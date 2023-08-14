@@ -1,5 +1,7 @@
+import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class EsChatCard extends StatelessWidget{
   const EsChatCard({super.key});
@@ -8,7 +10,7 @@ class EsChatCard extends StatelessWidget{
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-
+        context.push(Routes.chatRoom);
       },
       onLongPress: (){
 

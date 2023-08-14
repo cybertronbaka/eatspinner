@@ -10,3 +10,4 @@ export 'forgot_password_sent_page.dart';
 export 'chats/_all.dart';
 export 'profile_menu_page.dart';
 export 'edit_profile_page.dart';
+export 'chat_room_page.dart';

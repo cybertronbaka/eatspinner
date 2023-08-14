@@ -75,6 +75,13 @@ final router = GoRouter(
       },
     ),
     GoRoute(
+      path: Routes.chatRoom,
+      name: Routes.chatRoom,
+      builder: (context, state){
+        return const ChatRoomPage();
+      },
+    ),
+    GoRoute(
       path: Routes.places,
       name: Routes.places,
       builder: (context, state){

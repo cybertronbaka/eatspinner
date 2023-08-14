@@ -13,6 +13,7 @@ class EsTextField<T> extends StatelessWidget{
   final TextInputType? keyboardType;
   final int? minLines;
   final int? maxLines;
+  final bool expands;
 
   const EsTextField({
     super.key,
@@ -26,12 +27,14 @@ class EsTextField<T> extends StatelessWidget{
     this.readOnly = false,
     this.keyboardType,
     this.maxLines,
-    this.minLines
+    this.minLines,
+    this.expands = false
   });
 
   @override
   Widget build(BuildContext context) {
     return ReactiveTextField<T>(
+      expands: expands,
       keyboardType: keyboardType,
       minLines: minLines,
       maxLines: maxLines,

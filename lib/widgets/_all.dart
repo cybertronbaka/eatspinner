@@ -20,3 +20,5 @@ export 'custom_spinner_indicator.dart';
 export 'es_circular_icon_button.dart';
 export 'cover_photo.dart';
 export 'profile_photo.dart';
+export 'chat_text_bubble.dart';
+export 'message_bar.dart';

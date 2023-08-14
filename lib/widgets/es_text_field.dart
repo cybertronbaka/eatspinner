@@ -10,6 +10,9 @@ class EsTextField<T> extends StatelessWidget{
   final bool obscureText;
   final bool autofocus;
   final bool readOnly;
+  final TextInputType? keyboardType;
+  final int? minLines;
+  final int? maxLines;
 
   const EsTextField({
     super.key,
@@ -20,12 +23,18 @@ class EsTextField<T> extends StatelessWidget{
     this.onEditingComplete,
     this.obscureText = false,
     this.autofocus = false,
-    this.readOnly = false
+    this.readOnly = false,
+    this.keyboardType,
+    this.maxLines,
+    this.minLines
   });
 
   @override
   Widget build(BuildContext context) {
     return ReactiveTextField<T>(
+      keyboardType: keyboardType,
+      minLines: minLines,
+      maxLines: maxLines,
       formControlName: formControlName,
       obscureText: obscureText,
       readOnly: readOnly,

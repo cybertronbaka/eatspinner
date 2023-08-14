@@ -1,5 +1,7 @@
+import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileCard extends StatelessWidget{
   const ProfileCard({super.key});
@@ -48,7 +50,9 @@ class ProfileCard extends StatelessWidget{
             ),
           ),
           IconButton(
-              onPressed: (){},
+              onPressed: (){
+                context.push(Routes.editProfile);
+              },
               icon: const Icon(Icons.edit_outlined)
           )
         ],

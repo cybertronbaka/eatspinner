@@ -13,4 +13,5 @@ class Routes{
   static const profile = '/profile';
   static const chatsHome = '/messenger';
   static const profileMenu = '/profileMenu';
+  static const editProfile = '/profile/edit';
 }

@@ -122,6 +122,13 @@ final router = GoRouter(
       },
     ),
     GoRoute(
+      path: Routes.editProfile,
+      name: Routes.editProfile,
+      builder: (context, state){
+        return const EditProfilePage();
+      },
+    ),
+    GoRoute(
       path: Routes.profileMenu,
       name: Routes.profileMenu,
       builder: (context, state){

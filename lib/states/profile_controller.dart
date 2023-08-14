@@ -1,6 +1,7 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/models/profile/profile.dart';
 import 'package:eatspinner/repos/_all.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController{
@@ -18,7 +19,7 @@ class ProfileController extends GetxController{
       isFetching.value = false;
     } catch(e){
       isFetching.value = false;
-      rethrow;
+      EsToast.showError(e.toString());
     }
   }
 }

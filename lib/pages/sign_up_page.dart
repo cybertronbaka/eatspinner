@@ -94,15 +94,7 @@ class SignUpPage extends StatelessWidget {
                       return Obx(()=>EsFilledButton(
                         onPressed: controller.isSigningUp.isTrue || fg.invalid ? null : (){
                           controller.signUp().then((value){
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Signed Up in successfully'))
-                            );
                             context.pushReplacement(Routes.root);
-                          }).catchError((e){
-                            print('Error: ${e.toString()}');
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Error: ${e.toString()}'))
-                            );
                           });
                         },
                         labelText: 'SIGN UP',

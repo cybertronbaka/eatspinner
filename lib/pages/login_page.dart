@@ -81,23 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                         return Obx(()=> EsFilledButton(
                           onPressed: controller.isLoggingIn.isTrue || fg.invalid ? null : (){
                             controller.login().then((value){
-                              print('HEREEEE');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Logged in successfully'))
-                              );
                               dLink.blockRunning('login');
                               context.pushReplacement(Routes.root);
-                            }).catchError((e){
-                              if(e.toString().contains('Failed host lookup')){
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Something went wrong in the server!'))
-                                );
-                                return;
-                              }
-                              print('ERROR: ${e.toString()}');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Invalid email or password'))
-                              );
                             });
                           },
                           labelText: 'LOGIN',

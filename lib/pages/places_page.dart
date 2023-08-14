@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PlacesPage extends StatelessWidget {
   const PlacesPage({super.key});
@@ -20,7 +21,7 @@ class PlacesPage extends StatelessWidget {
         leading: BackButton(
           onPressed: (){
             final spinnerController = Get.find<SpinnerController>();
-            spinnerController.fetchNearby(context);
+            spinnerController.fetchNearby();
             context.pop();
           },
         ),
@@ -49,18 +50,10 @@ class PlacesPage extends StatelessWidget {
                     onChanged: (control){
                       if(control.value == null || control.value!.length < 3) return;
 
-                      controller.search(control.value!).catchError((e){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: ${e.toString()}'))
-                        );
-                      });
+                      controller.search(control.value!);
                     },
                     onEditingComplete: (control){
-                      controller.search(control.value!).catchError((e){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: ${e.toString()}'))
-                        );
-                      });
+                      controller.search(control.value!);
                     }
                   )
                 )),
@@ -91,15 +84,7 @@ class PlacesListView extends StatelessWidget {
         return PlaceCard(
           place: e,
           onDelete: (place){
-            controller.deletePlace(place.id!).then((value){
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Place Removed Successfully'))
-              );
-            }).catchError((error){
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Error: ${error.toString()}'))
-              );
-            });
+            controller.deletePlace(place.id!);
           },
           onEdit: (place){
             context.pushNamed(Routes.editPlace, pathParameters: {'id': place.id!.toString()});

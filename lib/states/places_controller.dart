@@ -1,4 +1,5 @@
 import 'package:eatspinner/repos/_all.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -32,31 +33,38 @@ class PlacesController extends GetxController{
 
   Future<void> fetchMany() async {
     isFetching.value = true;
-    PlaceRepo().fetchMany().then((value){
+    try {
+      final value = await PlaceRepo().fetchMany();
       places.value = value;
+    } catch(e){
+      EsToast.showError(e.toString());
+    } finally {
       isFetching.value = false;
-    }).catchError((error){
-      isFetching.value = false;
-    });
+    }
   }
 
 
   Future<void> search(String q) async {
     isFetching.value = true;
-    if(q.isEmpty) fetchMany();
+    if(q.isEmpty) return fetchMany();
 
-    try{
+    try {
       final res = await PlaceRepo().search(q);
       places.value = res;
+    } catch(e){
+      EsToast.showError(e.toString());
+    } finally {
       isFetching.value = false;
-    }catch(e){
-      isFetching.value = false;
-      rethrow;
     }
   }
 
   Future<void> deletePlace(int id) async {
-    await PlaceRepo().delete(id);
-    await fetchMany();
+    try {
+      await PlaceRepo().delete(id);
+      await fetchMany();
+      EsToast.showSuccess('Place Deleted Successfully');
+    } catch(e){
+      EsToast.showError(e.toString());
+    }
   }
 }

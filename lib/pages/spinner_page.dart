@@ -12,7 +12,7 @@ class SpinnerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<SpinnerController>();
-    controller.fetchNearby(context);
+    controller.fetchNearby();
 
     return Scaffold(
         appBar: AppBar(

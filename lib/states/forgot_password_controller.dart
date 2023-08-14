@@ -1,4 +1,5 @@
 import 'package:eatspinner/repos/auth_repo.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -17,10 +18,11 @@ class ForgotPasswordController extends GetxController {
     final email = formGroup.control('email').value;
     try {
       await AuthRepo().resetPassword(email);
+      EsToast.showSuccess('Reset Password link has been sent your email');
       isPending.value = false;
     }catch(e){
       isPending.value = false;
-      rethrow;
+      EsToast.showError(e.toString());
     }
   }
 

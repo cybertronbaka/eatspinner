@@ -58,14 +58,7 @@ class ResetPasswordPage extends StatelessWidget {
                       return Obx(() => EsFilledButton(
                         onPressed: controller.isPending.isTrue || fg.invalid ? null : (){
                           controller.resetPassword().then((value){
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Reset Password link has been sent your email'))
-                            );
                             context.pushReplacement(Routes.login);
-                          }).catchError((e){
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Error: ${e.toString()}'))
-                            );
                           });
                         },
                         labelText: 'RESET PASSWORD',

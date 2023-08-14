@@ -1,4 +1,5 @@
 import 'package:eatspinner/repos/location_repo.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
@@ -92,44 +93,43 @@ class _MapWidgetState extends State<MapWidget>{
           ),
         ],
         // Keeping the following attribution just in case of legal countermeasures.
-        // nonRotatedChildren: [
-        //   AttributionWidget(
-        //     attributionBuilder: (BuildContext context) {
-        //       return Align(
-        //         alignment: Alignment.bottomRight,
-        //         child: ColoredBox(
-        //           color: const Color(0xCCFFFFFF),
-        //           child: GestureDetector(
-        //             child: Padding(
-        //               padding: const EdgeInsets.all(3),
-        //               child: Row(
-        //                 mainAxisSize: MainAxisSize.min,
-        //                 children: const [
-        //                   MouseRegion(
-        //                     cursor: MouseCursor.defer,
-        //                     child: Text(
-        //                       '© OpenStreetMap',
-        //                       style: TextStyle(color: Color(0xFF0078a8),
-        //                     ),
-        //                   ),
-        //                   )
-        //                 ],
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ],
+        nonRotatedChildren: [
+          AttributionWidget(
+            attributionBuilder: (BuildContext context) {
+              return Align(
+                alignment: Alignment.bottomRight,
+                child: ColoredBox(
+                  color: const Color(0xCCFFFFFF),
+                  child: GestureDetector(
+                    child: const Padding(
+                      padding: EdgeInsets.all(3),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          MouseRegion(
+                            cursor: MouseCursor.defer,
+                            child: Text(
+                              '© OpenStreetMap',
+                              style: TextStyle(color: Color(0xFF0078a8),
+                            ),
+                          ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ))
     );
   }
 
   Future<void> _getCurrentPosition() async {
-    await LocationRepo(context).getCurrentPosition()
+    await LocationRepo().getCurrentPosition()
         .then((LatLng? latLng) {
-      // ref.read(RentalsMapState.locationProvider.notifier).state = position;
       if(latLng == null) return;
 
       print('Position: ${latLng.latitude}, ${latLng.longitude}');
@@ -142,7 +142,7 @@ class _MapWidgetState extends State<MapWidget>{
       final userLocation = LatLng(27.4716, 89.6386);
       stateController.location.value = userLocation;
       mapController.move(userLocation, 17);
-      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      EsToast.showError(e.toString());
     });
   }
 }

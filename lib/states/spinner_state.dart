@@ -39,28 +39,23 @@ class SpinnerController extends GetxController{
     selectedIndex.value = 0;
   }
 
-  void fetchNearby(BuildContext context){
-    LocationRepo(context).getCurrentPosition().then((value){
-      if(value == null) {
-        return;
+  Future<void> fetchNearby() async {
+    try {
+      final position = await LocationRepo().getCurrentPosition();
+      final res = await PlaceRepo().searchNearby(position);
+      if (res.isEmpty) {
+        places.value = [Place(name: 'None'), Place(name: 'None')];
+        canBeSpun.value = false;
+      } else if (res.length == 1) {
+        places.value = [res.first, res.first];
+        canBeSpun.value = false;
+      } else {
+        places.value = res;
+        canBeSpun.value = true;
       }
-      PlaceRepo().searchNearby(value).then((value){
-        if(value.isEmpty){
-          places.value = [Place(name: 'None'), Place(name: 'None')];
-          canBeSpun.value = false;
-        } else if (value.length == 1) {
-          places.value = [value.first, value.first];
-          canBeSpun.value = false;
-        } else {
-          places.value = value;
-          canBeSpun.value = true;
-        }
-        isFetching.value = false;
-      }).catchError((error){
-        // TODO: DO something here!
-        isFetching.value = false;
-      });
-    });
+    } finally {
+      isFetching.value = false;
+    }
   }
 
   void onSpinStart() {

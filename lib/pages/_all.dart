@@ -11,3 +11,4 @@ export 'chats/_all.dart';
 export 'profile_menu_page.dart';
 export 'edit_profile_page.dart';
 export 'chat_room_page.dart';
+export 'notifications_page.dart';

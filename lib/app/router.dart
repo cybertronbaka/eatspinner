@@ -82,6 +82,13 @@ final router = GoRouter(
       },
     ),
     GoRoute(
+      path: Routes.notifications,
+      name: Routes.notifications,
+      builder: (context, state){
+        return const NotificationsPage();
+      },
+    ),
+    GoRoute(
       path: Routes.places,
       name: Routes.places,
       builder: (context, state){

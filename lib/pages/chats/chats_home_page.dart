@@ -31,7 +31,7 @@ class _ChatsHomePageState extends State<ChatsHomePage>{
         actions: [
           IconButton(
             onPressed: (){
-
+              context.push(Routes.notifications);
             },
             icon: const Stack(
               children: [

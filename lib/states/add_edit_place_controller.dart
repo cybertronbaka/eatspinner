@@ -1,5 +1,6 @@
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -48,18 +49,22 @@ class AddEditPlaceController extends GetxController{
   }
 
   Future<Place?> save() async {
-    if(isSaving.isTrue) throw Exception('Already saving!');
+    if(isSaving.isTrue) {
+      EsToast.showError('Already saving!');
+      return null;
+    }
 
     isSaving.value = true;
-    Place place = Place.fromJson(formGroup.value.value);
-    Place? res;
-    try{
-      res = await PlaceRepo().save(place);
+
+    try {
+      final res =  await PlaceRepo().save(Place.fromJson(formGroup.value.value));
+      EsToast.showSuccess('Place Saved Successfully');
       isSaving.value = false;
       return res;
     } catch(e){
+      EsToast.showError(e.toString());
       isSaving.value = false;
-      rethrow;
+      return null;
     }
   }
 

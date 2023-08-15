@@ -14,56 +14,64 @@ class ResetPasswordPage extends StatelessWidget {
     final controller = Get.find<ResetPasswordController>();
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: ReactiveForm(
+      body: SafeArea(
+        child: ReactiveForm(
           formGroup: controller.formGroup,
-          child: Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: SpacedColumn(
-                  spaceHeight: 20,
-                  children: [
-                    const Text('Update your password!'),
-                    Image.asset(
-                      'assets/images/login_image.jpg',
-                      fit: BoxFit.fitWidth,
-                    ),
-                    const EsPasswordField(
-                      formControlName: 'password',
-                      labelText: 'Password',
-                    ),
-                    ReactiveFormConsumer(
-                      builder: (context, fg, _){
-                        return SizedBox(
-                          width: 1000,
-                          child: Obx(() => FilledButton(
-                            onPressed: controller.isPending.isTrue || fg.invalid ? null : (){
-                              controller.resetPassword().then((value){
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Reset Password link has been sent your email'))
-                                );
-                                context.pushReplacement(Routes.login);
-                              }).catchError((e){
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Error: ${e.toString()}'))
-                                );
-                              });
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Text('Reset'),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: SpacedColumn(
+                spaceHeight: 20,
+                children: [
+                  const SizedBox(height: 20),
+                  const SpacedColumn(
+                    spaceHeight: 8,
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                            'Resetting password',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20
                             )
-                          )),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                            'Set new password for your account.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xFF626262)
+                            )
+                        ),
+                      ),
+                    ],
+                  ),
+                  const EsPasswordField(
+                    formControlName: 'password',
+                    labelText: 'Password',
+                  ),
+                  ReactiveFormConsumer(
+                    builder: (context, fg, _){
+                      return Obx(() => EsFilledButton(
+                        onPressed: controller.isPending.isTrue || fg.invalid ? null : (){
+                          controller.resetPassword().then((value){
+                            context.pushReplacement(Routes.login);
+                          });
+                        },
+                        labelText: 'RESET PASSWORD',
+                      ));
+                    },
+                  ),
+                  const Divider()
+                ],
               ),
             ),
           ),
-        )
+        ),
+      )
     );
   }
 }

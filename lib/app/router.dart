@@ -1,6 +1,5 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/pages/_all.dart';
-import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -10,16 +9,18 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: Routes.root,
+      name: Routes.root,
       redirect: (context, GoRouterState state) async {
-        final deeplinkedRoute = await DeepLinkService.handleOnStart();
+        final deeplinkedRoute = await dLink.handleOnStart();
         if(deeplinkedRoute != null) return deeplinkedRoute;
 
-        return supabase.auth.currentUser == null ? Routes.login : Routes.spinner;
+        return supabase.auth.currentUser == null ? Routes.login : Routes.chatsHome;
       }
     ),
     GoRoute(
       path: Routes.resetPassword,
-      builder: (context, state){
+      name: Routes.resetPassword,
+        builder: (context, state){
         final controller = Get.put(ResetPasswordController());
         controller.reset();
         return const ResetPasswordPage();
@@ -27,7 +28,8 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.login,
-      builder: (context, state){
+      name: Routes.login,
+        builder: (context, state){
         final controller = Get.put(LoginController());
         controller.reset();
         return const LoginPage();
@@ -42,8 +44,16 @@ final router = GoRouter(
       }
     ),
     GoRoute(
+      path: Routes.forgotPasswordSent,
+      name: Routes.forgotPasswordSent,
+        builder: (context, state){
+        return const ForgotPasswordSentPage();
+      }
+    ),
+    GoRoute(
       path: Routes.signup,
-      builder: (context, state){
+      name: Routes.signup,
+        builder: (context, state){
         final controller = Get.put(SignUpController());
         controller.reset();
         return const SignUpPage();
@@ -52,22 +62,45 @@ final router = GoRouter(
     GoRoute(
       path: Routes.spinner,
       builder: (context, state){
-        final controller = Get.put(SpinnerController(context));
+        final controller = Get.put(SpinnerController());
         controller.reset();
         return const SpinnerPage();
       },
     ),
     GoRoute(
-      path: Routes.places,
+      path: Routes.chatsHome,
+      name: Routes.chatsHome,
       builder: (context, state){
-        final controller = Get.put(PlacesController(context));
+        return const ChatsHomePage();
+      },
+    ),
+    GoRoute(
+      path: Routes.chatRoom,
+      name: Routes.chatRoom,
+      builder: (context, state){
+        return const ChatRoomPage();
+      },
+    ),
+    GoRoute(
+      path: Routes.notifications,
+      name: Routes.notifications,
+      builder: (context, state){
+        return const NotificationsPage();
+      },
+    ),
+    GoRoute(
+      path: Routes.places,
+      name: Routes.places,
+      builder: (context, state){
+        final controller = Get.put(PlacesController());
         controller.reset(true);
         return const PlacesPage();
       },
     ),
     GoRoute(
       path: Routes.addPlace,
-      builder: (BuildContext context, GoRouterState state){
+      name: Routes.addPlace,
+        builder: (BuildContext context, GoRouterState state){
         final mapController = Get.put(MyMapController());
         final controller = Get.put(AddEditPlaceController());
         mapController.reset();
@@ -77,7 +110,8 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.editPlace,
-      redirect: (context, GoRouterState state){
+      name: Routes.editPlace,
+        redirect: (context, GoRouterState state){
         final id = state.pathParameters['id'];
         if(id == null || id == ':id')  return '404';
 
@@ -94,10 +128,25 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.profile,
+      name: Routes.profile,
       builder: (context, state){
         final controller = Get.put(ProfileController());
         controller.reset();
         return const ProfilePage();
+      },
+    ),
+    GoRoute(
+      path: Routes.editProfile,
+      name: Routes.editProfile,
+      builder: (context, state){
+        return const EditProfilePage();
+      },
+    ),
+    GoRoute(
+      path: Routes.profileMenu,
+      name: Routes.profileMenu,
+      builder: (context, state){
+        return const ProfileMenuPage();
       },
     ),
   ],

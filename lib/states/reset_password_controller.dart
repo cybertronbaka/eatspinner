@@ -1,4 +1,5 @@
 import 'package:eatspinner/repos/auth_repo.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -17,10 +18,11 @@ class ResetPasswordController extends GetxController {
     final password = formGroup.control('password').value;
     try {
       await AuthRepo().updatePassword(password);
+      EsToast.showSuccess('Your password has been reset');
       isPending.value = false;
     }catch(e){
       isPending.value = false;
-      rethrow;
+      EsToast.showError(e.toString());
     }
   }
 

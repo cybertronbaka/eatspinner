@@ -32,7 +32,7 @@ class _EsPasswordFieldState extends State<EsPasswordField>{
       autofocus: widget.autofocus,
       suffixIcon: InkWell(
         child: Icon(
-          hidden ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          hidden ? Icons.lock_open_outlined : Icons.lock_outlined,
         ),
         onTap: () {
           setState(() { hidden = !hidden; });

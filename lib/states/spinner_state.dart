@@ -10,15 +10,14 @@ import 'package:collection/collection.dart';
 import 'package:get/get.dart';
 
 class SpinnerController extends GetxController{
-  BuildContext context;
-  SpinnerController(this.context);
+  SpinnerController();
 
   RxList places = RxList([]);
   Rx<StreamController<int>> fortuneStream = StreamController<int>().obs;
   Rx<int> selectedIndex = 0.obs;
   Rx<bool> isSpinning = false.obs;
-  Rx<bool> isFetching = false.obs;
-  Rx<bool> canBeSpun = true.obs;
+  Rx<bool> isFetching = true.obs;
+  Rx<bool> canBeSpun = false.obs;
   Rx<bool> isLoggingOut = false.obs;
 
   void spin(){
@@ -38,34 +37,25 @@ class SpinnerController extends GetxController{
   void reset(){
     fortuneStream.value = StreamController<int>();
     selectedIndex.value = 0;
-    isSpinning.value = false;
-    isFetching.value = true;
-    canBeSpun.value = true;
-    fetchNearby();
   }
 
-  void fetchNearby(){
-    while(!context.mounted){}
-    LocationRepo(context).getCurrentPosition().then((value){
-      if(value == null) {
-        return;
+  Future<void> fetchNearby() async {
+    try {
+      final position = await LocationRepo().getCurrentPosition();
+      final res = await PlaceRepo().searchNearby(position);
+      if (res.isEmpty) {
+        places.value = [Place(name: 'None'), Place(name: 'None')];
+        canBeSpun.value = false;
+      } else if (res.length == 1) {
+        places.value = [res.first, res.first];
+        canBeSpun.value = false;
+      } else {
+        places.value = res;
+        canBeSpun.value = true;
       }
-      PlaceRepo().searchNearby(value).then((value){
-        if(value.isEmpty){
-          places.value = [Place(name: 'None'), Place(name: 'None')];
-          canBeSpun.value = false;
-        } else if (value.length == 1) {
-          places.value = [value.first, value.first];
-          canBeSpun.value = false;
-        } else {
-          places.value = value;
-        }
-        isFetching.value = false;
-      }).catchError((error){
-        // TODO: DO something here!
-        isFetching.value = false;
-      });
-    });
+    } finally {
+      isFetching.value = false;
+    }
   }
 
   void onSpinStart() {

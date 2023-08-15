@@ -10,6 +10,10 @@ class EsTextField<T> extends StatelessWidget{
   final bool obscureText;
   final bool autofocus;
   final bool readOnly;
+  final TextInputType? keyboardType;
+  final int? minLines;
+  final int? maxLines;
+  final bool expands;
 
   const EsTextField({
     super.key,
@@ -20,12 +24,20 @@ class EsTextField<T> extends StatelessWidget{
     this.onEditingComplete,
     this.obscureText = false,
     this.autofocus = false,
-    this.readOnly = false
+    this.readOnly = false,
+    this.keyboardType,
+    this.maxLines,
+    this.minLines,
+    this.expands = false
   });
 
   @override
   Widget build(BuildContext context) {
     return ReactiveTextField<T>(
+      expands: expands,
+      keyboardType: keyboardType,
+      minLines: minLines,
+      maxLines: maxLines,
       formControlName: formControlName,
       obscureText: obscureText,
       readOnly: readOnly,
@@ -36,7 +48,8 @@ class EsTextField<T> extends StatelessWidget{
       decoration: InputDecoration(
         labelText: labelText,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(6),
+          borderSide: const BorderSide(color: Color(0xFF626262))
         ),
         suffixIcon: suffixIcon
       ),

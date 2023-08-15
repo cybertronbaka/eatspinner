@@ -16,6 +16,7 @@ class SpinnerPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          leadingWidth: 30,
           title: const Text('Eat Spinner', style: TextStyle(fontWeight: FontWeight.bold)),
           actions: [
             Obx(() => IconButton(

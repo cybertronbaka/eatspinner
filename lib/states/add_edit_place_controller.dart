@@ -1,6 +1,8 @@
+import 'package:eatspinner/caches/_all.dart';
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/services/_all.dart';
+import 'package:eatspinner/states/_all.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:reactive_forms/reactive_forms.dart';
@@ -25,11 +27,12 @@ class AddEditPlaceController extends GetxController{
   Rx<FormGroup> formGroup = _createFormGroup().obs;
   Rx<bool> isSaving = false.obs;
   Rx<bool> isFetching = false.obs;
+  final PlacesControllerCache cache = PlacesControllerCache.initialize();
 
   void reset([int? id]){
     if(id != null) {
       isFetching.value = true;
-      PlaceRepo().fetchOne(id).then((value){
+      cache.getOne(id).then((value){
         // TODO: Better to redirect to exception page.
         if(value == null) throw Exception('This should no happen! Place fetched is not there!');
 
@@ -57,9 +60,14 @@ class AddEditPlaceController extends GetxController{
     isSaving.value = true;
 
     try {
-      final res =  await PlaceRepo().save(Place.fromJson(formGroup.value.value));
+      Place newPlace = Place.fromJson(formGroup.value.value);
+      final res = newPlace.id != null
+          ? await cache.update(newPlace)
+          : await cache.create(newPlace);
       EsToast.showSuccess('Place Saved Successfully');
       isSaving.value = false;
+      final placesController = Get.find<PlacesController>();
+      placesController.fetchMany();
       return res;
     } catch(e){
       EsToast.showError(e.toString());

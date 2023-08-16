@@ -86,10 +86,12 @@ class SimpleCache<T, I>{
   }
 
   List<T> getAllFromCache(){
+
     final values = storage.getItem(config.tableName);
     if(values == null) return [];
 
-    return values.toList();
+    List newValues = values;
+    return newValues.map((e) => config.fromJson(e)).toList();
   }
 
   List<T> replaceAllInCache(List<T> list){
@@ -140,7 +142,7 @@ class SimpleCache<T, I>{
     } else {
       oldResources[foundIndex] = a;
     }
-    storage.setItem(config.tableName, oldResources);
+    storage.setItem(config.tableName, oldResources.map((e) => config.toJson(e)).toList());
     return a;
   }
 

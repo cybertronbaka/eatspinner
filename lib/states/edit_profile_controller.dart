@@ -9,7 +9,7 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 FormGroup _createFormGroup([Profile? profile]){
   return fb.group({
-    'id': [profile?.id ?? '', Validators.required],
+    'id': [profile?.id, Validators.required],
     'name': [profile?.name ?? '', Validators.required],
     'age': [profile?.age ?? 15, Validators.required, Validators.min(15)],
     'gender': [profile?.gender ?? 'Male', Validators.required],

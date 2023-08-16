@@ -9,7 +9,7 @@ class ProfilePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ProfileController>();
+    // final controller = Get.find<ProfileController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,16 +43,16 @@ class ProfilePage extends StatelessWidget{
                     backgroundImage: AssetImage('assets/images/login_image.jpg')
                   ),
                 ),
-                Text(
-                  controller.profile.value!.name ?? '-',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24
-                  ),
-                ),
-                Text(
-                  controller.profile.value!.email ?? '-',
-                )
+                // Text(
+                //   controller.profile.value!.name ?? '-',
+                //   style: const TextStyle(
+                //     fontWeight: FontWeight.bold,
+                //     fontSize: 24
+                //   ),
+                // ),
+                // Text(
+                //   controller.profile.value!.email ?? '-',
+                // )
               ],
             )),
           )

@@ -19,6 +19,12 @@ class Profile {
   final String? bio;
   @JsonKey(name: "user_id")
   final String? userId;
+  @JsonKey(name: "avatar_url")
+  final String? avatarUrl;
+  @JsonKey(name: "cover_url")
+  final String? coverUrl;
+  @JsonKey(name: "created_at")
+  final String? createdAt;
 
   Profile({
     this.id,
@@ -27,7 +33,10 @@ class Profile {
     this.gender,
     this.name,
     this.bio,
-    this.userId
+    this.userId,
+    this.avatarUrl,
+    this.coverUrl,
+    this.createdAt
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) => _$ProfileFromJson(json);

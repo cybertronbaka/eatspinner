@@ -68,8 +68,9 @@ class ProfilePhoto extends StatelessWidget{
   Widget emptyProfilePhoto(){
     return Container(
       decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: hasBorder ? Border.all(color: Colors.white, width: 2) : null
+        color: const Color(0xFFD9D9D9),
+        shape: BoxShape.circle,
+        border: hasBorder ? Border.all(color: Colors.white, width: 2) : null
       ),
       height: diameter,
       width: diameter,

@@ -130,8 +130,8 @@ final router = GoRouter(
       path: Routes.profile,
       name: Routes.profile,
       builder: (context, state){
-        final controller = Get.put(ProfileController());
-        controller.reset();
+        // final controller = Get.put(ProfileController());
+        // controller.reset();
         return const ProfilePage();
       },
     ),
@@ -139,6 +139,8 @@ final router = GoRouter(
       path: Routes.editProfile,
       name: Routes.editProfile,
       builder: (context, state){
+        final controller = Get.put(EditProfileController());
+        controller.reset();
         return const EditProfilePage();
       },
     ),

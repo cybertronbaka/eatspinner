@@ -1,5 +1,6 @@
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProfilePhoto extends StatelessWidget{
@@ -7,12 +8,14 @@ class ProfilePhoto extends StatelessWidget{
   final bool isEditable;
   final bool hasBorder;
   final double diameter;
+  final void Function(XFile image)? onPick;
   const ProfilePhoto({
     super.key,
     required this.url,
     this.isEditable = false,
     this.hasBorder = false,
-    this.diameter = 150
+    this.diameter = 150,
+    this.onPick
   });
 
   @override
@@ -37,7 +40,7 @@ class ProfilePhoto extends StatelessWidget{
       ),
       child: ClipOval(
         child: Image.network(
-          'https://images6.alphacoders.com/126/1261894.jpg',
+          url!,
           width: hasBorder ? diameter - 4 : diameter,
           height: hasBorder ? diameter - 4 : diameter,
           fit: BoxFit.cover,
@@ -60,7 +63,12 @@ class ProfilePhoto extends StatelessWidget{
 
   Widget cameraButton() {
     return EsCircularIconButton(
-        onTap: (){},
+        onTap: () async {
+          final ImagePicker picker = ImagePicker();
+          final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+          if(image == null) return;
+          if(onPick != null) onPick!(image);
+        },
         icon: const Icon(Icons.camera_alt_outlined)
     );
   }

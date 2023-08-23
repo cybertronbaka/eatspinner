@@ -1,8 +1,10 @@
+import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:shimmer/shimmer.dart';
 
 
 class EditProfilePage extends StatelessWidget{
@@ -24,8 +26,6 @@ class EditProfilePage extends StatelessWidget{
         }),
       ),
       body: Obx((){
-        final profile = controller.profile.value;
-
         return controller.isFetching.isFalse
             ? ReactiveForm(
           formGroup: controller.formGroup.value!,
@@ -36,21 +36,31 @@ class EditProfilePage extends StatelessWidget{
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    CoverPhoto(
-                      // url: '',
-                      // url: 'https://rare-gallery.com/resol/2560x1440/343212-Tanjirou-Tanjiro-Kamado-Demon-Slayer-Kimetsu-no-Yaiba-Anime-Kimetsu-no-Yaiba-.jpg',
-                        url: profile!.coverUrl,
-                        isEditable: true,
-                        height: coverPhotoHeight
+                    ReactiveValueListenableBuilder(
+                      formControlName: 'cover_url',
+                      builder: (context, control, _){
+                        return CoverPhoto(
+                            url: StorageUtils.getPublicUrl(control.value as String?),
+                            isEditable: true,
+                            height: coverPhotoHeight,
+                            onPick: (image) => controller.uploadPhoto(image, 'cover')
+                        );
+                      },
                     ),
                     Positioned(
                       bottom: 0,
                       left: 20,
-                      child: ProfilePhoto(
-                        url: profile.avatarUrl,
-                        isEditable: true,
-                        hasBorder: true,
-                        diameter: coverPhotoHeight,
+                      child: ReactiveValueListenableBuilder(
+                        formControlName: 'avatar_url',
+                        builder: (context, control, child) {
+                          return ProfilePhoto(
+                            url: StorageUtils.getPublicUrl(control.value as String?),
+                            isEditable: true,
+                            hasBorder: true,
+                            diameter: coverPhotoHeight,
+                            onPick: (image) => controller.uploadPhoto(image, 'avatar'),
+                          );
+                        },
                       ),
                     )
                   ],
@@ -100,7 +110,9 @@ class EditProfilePage extends StatelessWidget{
                       minLines: 3,
                     ),
                     EsFilledButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        controller.save();
+                      },
                       labelText: 'SAVE',
                     )
                   ],
@@ -121,12 +133,69 @@ class EditProfileShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: SizedBox(
-        height: 30,
-        width: 30,
-        child: CircularProgressIndicator(),
-      ),
+    const coverPhotoHeight = 150.0;
+
+    return ListView(
+      children: [
+        SizedBox(
+          height: coverPhotoHeight * 1.5,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Shimmer.fromColors(
+                baseColor: const Color(0xFFD2D2D2),
+                highlightColor: const Color(0xFFE5E5E5),
+                child: const CoverPhoto(
+                  url: '',
+                  isEditable: true,
+                  height: coverPhotoHeight,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 20,
+                child: Shimmer.fromColors(
+                  baseColor: const Color(0xFFD2D2D2),
+                  highlightColor: const Color(0xFFE5E5E5),
+                  child: const ProfilePhoto(
+                    url: '',
+                    isEditable: true,
+                    hasBorder: true,
+                    diameter: coverPhotoHeight,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(height: 30),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SpacedColumn(
+            spaceHeight: 20,
+            children: [
+              const EsTextFieldShimmer(),
+              const EsCounterFieldShimmer(),
+              const EsDropdownFieldShimmer(),
+              const EsTextFieldShimmer(),
+              const EsTextFieldMultiLineShimmer(lines: 3),
+              Shimmer.fromColors(
+                  baseColor: const Color(0xFFD2D2D2),
+                  highlightColor: const Color(0xFFE5E5E5),
+                  child: Container(
+                    height: 80,
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                  )
+              )
+            ],
+          ),
+        ),
+        const SizedBox(height: 50),
+      ],
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+import 'package:shimmer/shimmer.dart';
 
 class EsDropdownField<T> extends StatelessWidget{
   final String formControlName;
@@ -23,6 +24,26 @@ class EsDropdownField<T> extends StatelessWidget{
         ),
       ),
       items: items
+    );
+  }
+}
+
+class EsDropdownFieldShimmer extends StatelessWidget {
+  const EsDropdownFieldShimmer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+        baseColor: const Color(0xFFD2D2D2),
+        highlightColor: const Color(0xFFE5E5E5),
+        child: Container(
+          height: 70,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
+        )
     );
   }
 }

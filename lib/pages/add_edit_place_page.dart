@@ -96,12 +96,12 @@ class AddEditPlaceForm extends StatelessWidget {
                       return FilledButton(
                           onPressed: controller.isSaving.isTrue || formGroup.invalid ? null : (){
                             controller.save().then((value){
-                              context.pop();
+                              if(value != null) context.pop();
                             });
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(20),
-                            child: Text('Save'),
+                            child: Text('SAVE'),
                           )
                       );
                     },

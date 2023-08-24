@@ -70,7 +70,7 @@ class PlaceRepo {
   Future<List<Place>> fetchMany() async {
     var filterBuilder = supabase.from(_tableName).select('*');
 
-    final response = await filterBuilder.order('created_at', ascending: true) as List;
+    final response = await filterBuilder.order('created_at', ascending: false) as List;
     print("FETCHED MANY(Place) is $response");
 
     return convertMapListToObjs(response);

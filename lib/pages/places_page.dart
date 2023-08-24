@@ -18,6 +18,7 @@ class PlacesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 30,
         leading: BackButton(
           onPressed: (){
             final spinnerController = Get.find<SpinnerController>();
@@ -84,7 +85,7 @@ class PlacesListView extends StatelessWidget {
         return PlaceCard(
           place: e,
           onDelete: (place){
-            controller.deletePlace(place.id!);
+            controller.deletePlace(place);
           },
           onEdit: (place){
             context.pushNamed(Routes.editPlace, pathParameters: {'id': place.id!.toString()});

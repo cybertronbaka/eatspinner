@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:math';
 
+import 'package:eatspinner/caches/_all.dart';
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/repos/auth_repo.dart';
@@ -19,6 +19,7 @@ class SpinnerController extends GetxController{
   Rx<bool> isFetching = true.obs;
   Rx<bool> canBeSpun = false.obs;
   Rx<bool> isLoggingOut = false.obs;
+  SpinnerControllerCache cache = SpinnerControllerCache.initialize();
 
   void spin(){
     if(isSpinning.isTrue) return;
@@ -41,8 +42,15 @@ class SpinnerController extends GetxController{
 
   Future<void> fetchNearby() async {
     try {
+      if(cache.hasLocalData){
+        print('keeping cache');
+        places.value = cache.getAllFromCache();
+        isFetching.value = false;
+        canBeSpun.value = false;
+      }
+
       final position = await LocationRepo().getCurrentPosition();
-      final res = await PlaceRepo().searchNearby(position);
+      final res = await cache.searchNearby(position);
       if (res.isEmpty) {
         places.value = [Place(name: 'None'), Place(name: 'None')];
         canBeSpun.value = false;
@@ -53,6 +61,9 @@ class SpinnerController extends GetxController{
         places.value = res;
         canBeSpun.value = true;
       }
+    } catch(e) {
+      places.value = [Place(name: 'None'), Place(name: 'None')];
+      canBeSpun.value = false;
     } finally {
       isFetching.value = false;
     }

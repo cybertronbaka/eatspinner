@@ -1,3 +1,5 @@
+import 'package:eatspinner/caches/_all.dart';
+import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/services/_all.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class PlacesController extends GetxController{
   FormGroup formGroup = _createFormGroup();
   RxList places = RxList([]);
   Rx<bool> isFetching = false.obs;
+  PlacesControllerCache cache = PlacesControllerCache.initialize();
 
   void reset([bool loadAll = false]){
     formGroup = _createFormGroup();
@@ -34,7 +37,7 @@ class PlacesController extends GetxController{
   Future<void> fetchMany() async {
     isFetching.value = true;
     try {
-      final value = await PlaceRepo().fetchMany();
+      final value = await cache.getAll();
       places.value = value;
     } catch(e){
       EsToast.showError(e.toString());
@@ -49,7 +52,7 @@ class PlacesController extends GetxController{
     if(q.isEmpty) return fetchMany();
 
     try {
-      final res = await PlaceRepo().search(q);
+      final res = await cache.search(q);
       places.value = res;
     } catch(e){
       EsToast.showError(e.toString());
@@ -58,9 +61,9 @@ class PlacesController extends GetxController{
     }
   }
 
-  Future<void> deletePlace(int id) async {
+  Future<void> deletePlace(Place place) async {
     try {
-      await PlaceRepo().delete(id);
+      await cache.delete(place);
       await fetchMany();
       EsToast.showSuccess('Place Deleted Successfully');
     } catch(e){

@@ -14,9 +14,9 @@ class ProfileMenuItem extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
         height: 60,
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
@@ -24,15 +24,20 @@ class ProfileMenuItem extends StatelessWidget{
           border: Border.all(color: const Color(0xFFF5F4F4)),
           color: const Color(0xFFFAF9F9),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(
-          children: [
-            Expanded(child: Text(
-              title,
-              style: const TextStyle(fontSize: 16),
-            )),
-            icon,
-          ],
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                Expanded(child: Text(
+                  title,
+                  style: const TextStyle(fontSize: 16),
+                )),
+                icon,
+              ],
+            ),
+          ),
         ),
       ),
     );

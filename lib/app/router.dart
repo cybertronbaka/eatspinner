@@ -129,9 +129,15 @@ final router = GoRouter(
     GoRoute(
       path: Routes.profile,
       name: Routes.profile,
-      builder: (context, state){
-        // final controller = Get.put(ProfileController());
-        // controller.reset();
+      redirect: (context, state){
+        final id = state.pathParameters['id'];
+        if(id == null || id == '') return Routes.notFound;
+
+        return null;
+      },
+      builder: (context, GoRouterState state){
+        final id = state.pathParameters['id'];
+        final controller = Get.put(ProfileController(uid: id!));
         return const ProfilePage();
       },
     ),

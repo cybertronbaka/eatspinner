@@ -7,3 +7,4 @@ export 'sign_up_controller.dart';
 export 'forgot_password_controller.dart';
 export 'reset_password_controller.dart';
 export 'edit_profile_controller.dart';
+export 'profile_controller.dart';

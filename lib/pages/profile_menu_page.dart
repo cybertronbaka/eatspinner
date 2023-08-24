@@ -20,7 +20,12 @@ class ProfileMenuPage extends StatelessWidget{
             ProfileMenuItem(
               title: 'View Profile',
               icon: const Icon(Icons.visibility_outlined, color: Color(0xFF626262)),
-              onTap: (){},
+              onTap: (){
+                context.pushNamed(
+                  Routes.profile,
+                  pathParameters: { 'id': supabase.auth.currentUser!.id }
+                );
+              },
             ),
             ProfileMenuItem(
               title: 'Play Eat Spinner',

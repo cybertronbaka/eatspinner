@@ -10,7 +10,7 @@ class Routes{
   static const forgotPasswordSent = '/auth/forgotPasswordSent';
   static const resetPassword = '/resetpassword';
   static const notFound = '/notFound';
-  static const profile = '/profile/:id';
+  static const profile = '/profileView/:id';
   static const chatsHome = '/chats';
   static const profileMenu = '/profileMenu';
   static const editProfile = '/profile/edit';

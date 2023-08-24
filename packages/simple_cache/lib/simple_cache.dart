@@ -128,7 +128,16 @@ class SimpleCache<T, I>{
     }
 
     print('got one from cache');
-    return getAllFromCache().firstWhere((e) => config.hitCondition(e, identifier));
+    return getOneFromCache(identifier);
+  }
+
+  T? getOneFromCache(I identifier) {
+    try{
+      print('got one from cache');
+      return getAllFromCache().firstWhere((e) => config.hitCondition(e, identifier));
+    } catch(e){
+      return null;
+    }
   }
 
   T createOrUpdateInCache(T a){

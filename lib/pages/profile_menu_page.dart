@@ -1,6 +1,8 @@
 import 'package:eatspinner/app/_all.dart';
+import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileMenuPage extends StatelessWidget{
@@ -8,6 +10,9 @@ class ProfileMenuPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    final profileController = Get.find<MyProfileController>();
+    profileController.fetchProfile();
+
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -15,7 +20,11 @@ class ProfileMenuPage extends StatelessWidget{
         child: SpacedColumn(
           spaceHeight: 10,
           children: [
-            const ProfileCard(),
+            Obx((){
+              return ProfileCard(
+                profile: profileController.profile.value
+              );
+            }),
             const SizedBox(height: 10),
             ProfileMenuItem(
               title: 'View Profile',

@@ -71,6 +71,7 @@ final router = GoRouter(
       path: Routes.chatsHome,
       name: Routes.chatsHome,
       builder: (context, state){
+        final profileController = Get.put(MyProfileController());
         return const ChatsHomePage();
       },
     ),

@@ -17,6 +17,7 @@ class ProfilePage extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 30,
         leading: BackButton(
           onPressed: (){
             context.pop();

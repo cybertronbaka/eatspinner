@@ -21,6 +21,12 @@ abstract class _$ProfileCWProxy {
 
   Profile userId(String? userId);
 
+  Profile avatarUrl(String? avatarUrl);
+
+  Profile coverUrl(String? coverUrl);
+
+  Profile createdAt(String? createdAt);
+
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Profile(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
   /// Usage
@@ -35,6 +41,9 @@ abstract class _$ProfileCWProxy {
     String? name,
     String? bio,
     String? userId,
+    String? avatarUrl,
+    String? coverUrl,
+    String? createdAt,
   });
 }
 
@@ -66,6 +75,15 @@ class _$ProfileCWProxyImpl implements _$ProfileCWProxy {
   Profile userId(String? userId) => this(userId: userId);
 
   @override
+  Profile avatarUrl(String? avatarUrl) => this(avatarUrl: avatarUrl);
+
+  @override
+  Profile coverUrl(String? coverUrl) => this(coverUrl: coverUrl);
+
+  @override
+  Profile createdAt(String? createdAt) => this(createdAt: createdAt);
+
+  @override
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `Profile(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -81,6 +99,9 @@ class _$ProfileCWProxyImpl implements _$ProfileCWProxy {
     Object? name = const $CopyWithPlaceholder(),
     Object? bio = const $CopyWithPlaceholder(),
     Object? userId = const $CopyWithPlaceholder(),
+    Object? avatarUrl = const $CopyWithPlaceholder(),
+    Object? coverUrl = const $CopyWithPlaceholder(),
+    Object? createdAt = const $CopyWithPlaceholder(),
   }) {
     return Profile(
       id: id == const $CopyWithPlaceholder()
@@ -111,6 +132,18 @@ class _$ProfileCWProxyImpl implements _$ProfileCWProxy {
           ? _value.userId
           // ignore: cast_nullable_to_non_nullable
           : userId as String?,
+      avatarUrl: avatarUrl == const $CopyWithPlaceholder()
+          ? _value.avatarUrl
+          // ignore: cast_nullable_to_non_nullable
+          : avatarUrl as String?,
+      coverUrl: coverUrl == const $CopyWithPlaceholder()
+          ? _value.coverUrl
+          // ignore: cast_nullable_to_non_nullable
+          : coverUrl as String?,
+      createdAt: createdAt == const $CopyWithPlaceholder()
+          ? _value.createdAt
+          // ignore: cast_nullable_to_non_nullable
+          : createdAt as String?,
     );
   }
 }
@@ -134,6 +167,9 @@ extension $ProfileCopyWith on Profile {
     bool name = false,
     bool bio = false,
     bool userId = false,
+    bool avatarUrl = false,
+    bool coverUrl = false,
+    bool createdAt = false,
   }) {
     return Profile(
       id: id == true ? null : this.id,
@@ -143,6 +179,9 @@ extension $ProfileCopyWith on Profile {
       name: name == true ? null : this.name,
       bio: bio == true ? null : this.bio,
       userId: userId == true ? null : this.userId,
+      avatarUrl: avatarUrl == true ? null : this.avatarUrl,
+      coverUrl: coverUrl == true ? null : this.coverUrl,
+      createdAt: createdAt == true ? null : this.createdAt,
     );
   }
 }
@@ -159,6 +198,9 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
       name: json['name'] as String?,
       bio: json['bio'] as String?,
       userId: json['user_id'] as String?,
+      avatarUrl: json['avatar_url'] as String?,
+      coverUrl: json['cover_url'] as String?,
+      createdAt: json['created_at'] as String?,
     );
 
 Map<String, dynamic> _$ProfileToJson(Profile instance) {
@@ -177,5 +219,8 @@ Map<String, dynamic> _$ProfileToJson(Profile instance) {
   writeNotNull('name', instance.name);
   writeNotNull('bio', instance.bio);
   writeNotNull('user_id', instance.userId);
+  writeNotNull('avatar_url', instance.avatarUrl);
+  writeNotNull('cover_url', instance.coverUrl);
+  writeNotNull('created_at', instance.createdAt);
   return val;
 }

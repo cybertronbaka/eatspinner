@@ -1,7 +1,9 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/pages/_all.dart';
+import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ChatsHomePage extends StatefulWidget{
@@ -25,6 +27,9 @@ class _ChatsHomePageState extends State<ChatsHomePage>{
 
   @override
   Widget build(BuildContext context) {
+    final profileController = Get.find<MyProfileController>();
+    profileController.fetchProfile(force: true);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Eat Spinner'), // TODO: Add name by keeping profile info in localStorage

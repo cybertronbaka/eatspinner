@@ -1,6 +1,8 @@
 import 'package:eatspinner/app/_all.dart';
+import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileMenuPage extends StatelessWidget{
@@ -8,19 +10,39 @@ class ProfileMenuPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    final profileController = Get.find<MyProfileController>();
+    profileController.fetchProfile();
+
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: Obx((){
+          return BackButton(
+            onPressed: profileController.isLoggingOut.isTrue ? null : (){
+              context.pop();
+            },
+          );
+        }),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SpacedColumn(
           spaceHeight: 10,
           children: [
-            const ProfileCard(),
+            Obx((){
+              return ProfileCard(
+                profile: profileController.profile.value
+              );
+            }),
             const SizedBox(height: 10),
             ProfileMenuItem(
               title: 'View Profile',
               icon: const Icon(Icons.visibility_outlined, color: Color(0xFF626262)),
-              onTap: (){},
+              onTap: (){
+                context.pushNamed(
+                  Routes.profile,
+                  pathParameters: { 'id': supabase.auth.currentUser!.id }
+                );
+              },
             ),
             ProfileMenuItem(
               title: 'Play Eat Spinner',
@@ -37,7 +59,15 @@ class ProfileMenuPage extends StatelessWidget{
             ProfileMenuItem(
               title: 'Logout',
               icon: const Icon(Icons.logout_outlined, color: Color(0xFF626262)),
-              onTap: (){},
+              onTap: (){
+                profileController.logout().then((value){
+                  if(value){
+                    dLink.blockRunning('authenticatedApp');
+                    context.pop();
+                    context.pushReplacement(Routes.root);
+                  }
+                });
+              },
             )
           ],
         ),

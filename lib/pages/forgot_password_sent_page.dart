@@ -13,7 +13,7 @@ class ForgotPasswordSentPage extends StatelessWidget {
         appBar: AppBar(
           leading: BackButton(
             onPressed: (){
-              context.pushReplacement(Routes.login);
+              context.pop();
             }
           ),
         ),

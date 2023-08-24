@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class EsToast {
-  static void showError(String msg){
+  static void showError(String msg, [StackTrace? stkTrc]){
     print('ERROR: $msg');
+    if(stkTrc != null) print(stkTrc.toString());
     Fluttertoast.showToast(
         msg: 'Error: $msg',
         toastLength: Toast.LENGTH_LONG,

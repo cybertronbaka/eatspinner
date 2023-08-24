@@ -86,10 +86,12 @@ class SimpleCache<T, I>{
   }
 
   List<T> getAllFromCache(){
+
     final values = storage.getItem(config.tableName);
     if(values == null) return [];
 
-    return values.toList();
+    List newValues = values;
+    return newValues.map((e) => config.fromJson(e)).toList();
   }
 
   List<T> replaceAllInCache(List<T> list){
@@ -126,7 +128,16 @@ class SimpleCache<T, I>{
     }
 
     print('got one from cache');
-    return getAllFromCache().firstWhere((e) => config.hitCondition(e, identifier));
+    return getOneFromCache(identifier);
+  }
+
+  T? getOneFromCache(I identifier) {
+    try{
+      print('got one from cache');
+      return getAllFromCache().firstWhere((e) => config.hitCondition(e, identifier));
+    } catch(e){
+      return null;
+    }
   }
 
   T createOrUpdateInCache(T a){
@@ -140,7 +151,7 @@ class SimpleCache<T, I>{
     } else {
       oldResources[foundIndex] = a;
     }
-    storage.setItem(config.tableName, oldResources);
+    storage.setItem(config.tableName, oldResources.map((e) => config.toJson(e)).toList());
     return a;
   }
 

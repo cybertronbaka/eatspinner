@@ -71,6 +71,7 @@ final router = GoRouter(
       path: Routes.chatsHome,
       name: Routes.chatsHome,
       builder: (context, state){
+        final profileController = Get.put(MyProfileController());
         return const ChatsHomePage();
       },
     ),
@@ -129,9 +130,15 @@ final router = GoRouter(
     GoRoute(
       path: Routes.profile,
       name: Routes.profile,
-      builder: (context, state){
-        final controller = Get.put(ProfileController());
-        controller.reset();
+      redirect: (context, state){
+        final id = state.pathParameters['id'];
+        if(id == null || id == '') return Routes.notFound;
+
+        return null;
+      },
+      builder: (context, GoRouterState state){
+        final id = state.pathParameters['id'];
+        final controller = Get.put(ProfileController(uid: id!));
         return const ProfilePage();
       },
     ),
@@ -139,6 +146,8 @@ final router = GoRouter(
       path: Routes.editProfile,
       name: Routes.editProfile,
       builder: (context, state){
+        final controller = Get.put(EditProfileController());
+        controller.reset();
         return const EditProfilePage();
       },
     ),

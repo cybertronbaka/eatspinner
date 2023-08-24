@@ -1,16 +1,19 @@
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CoverPhoto extends StatelessWidget{
   final String? url;
   final bool isEditable;
   final double height;
+  final void Function(XFile image)? onPick;
   const CoverPhoto({
     super.key,
     required this.url,
     this.isEditable = false,
-    this.height = 150
+    this.height = 150,
+    this.onPick
   });
 
   @override
@@ -63,7 +66,12 @@ class CoverPhoto extends StatelessWidget{
 
   Widget cameraButton() {
     return EsCircularIconButton(
-        onTap: (){},
+        onTap: () async {
+          final ImagePicker picker = ImagePicker();
+          final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+          if(image == null) return;
+          if(onPick != null) onPick!(image);
+        },
         icon: const Icon(Icons.camera_alt_outlined)
     );
   }

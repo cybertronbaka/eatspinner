@@ -15,11 +15,13 @@ class ForgotPasswordPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: (){
-            context.pushReplacement(Routes.login);
-          }
-        ),
+        leading: Obx((){
+          return BackButton(
+            onPressed: controller.isPending.isTrue ? null : (){
+              context.pop();
+            }
+          );
+        }),
       ),
       body: SafeArea(
           child: ReactiveForm(

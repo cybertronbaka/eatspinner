@@ -30,6 +30,7 @@ class _EsPasswordFieldState extends State<EsPasswordField>{
       obscureText: hidden,
       onEditingComplete: widget.onEditingComplete,
       autofocus: widget.autofocus,
+      maxLines: 1,
       suffixIcon: InkWell(
         child: Icon(
           hidden ? Icons.lock_open_outlined : Icons.lock_outlined,

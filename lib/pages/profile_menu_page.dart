@@ -14,7 +14,15 @@ class ProfileMenuPage extends StatelessWidget{
     profileController.fetchProfile();
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: Obx((){
+          return BackButton(
+            onPressed: profileController.isLoggingOut.isTrue ? null : (){
+              context.pop();
+            },
+          );
+        }),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SpacedColumn(
@@ -51,7 +59,15 @@ class ProfileMenuPage extends StatelessWidget{
             ProfileMenuItem(
               title: 'Logout',
               icon: const Icon(Icons.logout_outlined, color: Color(0xFF626262)),
-              onTap: (){},
+              onTap: (){
+                profileController.logout().then((value){
+                  if(value){
+                    dLink.blockRunning('authenticatedApp');
+                    context.pop();
+                    context.pushReplacement(Routes.root);
+                  }
+                });
+              },
             )
           ],
         ),

@@ -25,23 +25,6 @@ class SpinnerPage extends StatelessWidget {
                 },
                 icon: const Icon(Icons.edit_outlined)
             )),
-            // TODO: Move this to profile menu page.
-            // Obx(() => IconButton(
-            //     onPressed: controller.isSpinning.isTrue || controller.isLoggingOut.isTrue ? null : (){
-            //       controller.logout().then((value){
-            //         ScaffoldMessenger.of(context).showSnackBar(
-            //             const SnackBar(content: Text('Logged out successfully'))
-            //         );
-            //         dLink.blockRunning('spinner');
-            //         context.pushReplacement(Routes.login);
-            //       }).catchError((e){
-            //         ScaffoldMessenger.of(context).showSnackBar(
-            //             SnackBar(content: Text('Error: ${e.toString()}'))
-            //         );
-            //       });
-            //     },
-            //     icon: const Icon(Icons.logout)
-            // )),
           ],
         ),
         body: Obx(

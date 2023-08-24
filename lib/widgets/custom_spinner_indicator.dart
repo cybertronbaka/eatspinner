@@ -15,7 +15,10 @@ class CustomSpinnerIndicatorPainter extends CustomPainter {
       ..color = strokeColor
       ..strokeWidth = strokeWidth
       ..style = paintingStyle;
-
+    Paint newPaint = Paint()
+      ..color = Colors.white.withOpacity(0.2)
+      ..strokeWidth = strokeWidth
+      ..style = paintingStyle;
     canvas.drawPath(getTopPartPath(size.width, size.height), paint);
     canvas.drawPath(getBottomPartPath(size.width, size.height), paint);
   }
@@ -62,15 +65,18 @@ class CustomSpinnerIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: CustomSpinnerIndicatorPainter(
-        strokeColor: Colors.red,
-        strokeWidth: 10,
-        paintingStyle: PaintingStyle.fill,
-      ),
-      child: const SizedBox(
-        height: 50,
-        width: 25,
+    return Transform.rotate(
+      angle: math.pi,
+      child: CustomPaint(
+        painter: CustomSpinnerIndicatorPainter(
+          strokeColor: const Color(0xFFEF2F2F),
+          strokeWidth: 10,
+          paintingStyle: PaintingStyle.fill,
+        ),
+        child: const SizedBox(
+          height: 70,
+          width: 40,
+        ),
       ),
     );
   }

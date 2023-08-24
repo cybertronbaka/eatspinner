@@ -4,6 +4,7 @@ import 'package:eatspinner/caches/_all.dart';
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/repos/_all.dart';
 import 'package:eatspinner/repos/auth_repo.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
@@ -18,7 +19,6 @@ class SpinnerController extends GetxController{
   Rx<bool> isSpinning = false.obs;
   Rx<bool> isFetching = true.obs;
   Rx<bool> canBeSpun = false.obs;
-  Rx<bool> isLoggingOut = false.obs;
   SpinnerControllerCache cache = SpinnerControllerCache.initialize();
 
   void spin(){
@@ -48,9 +48,10 @@ class SpinnerController extends GetxController{
         isFetching.value = false;
         canBeSpun.value = false;
       }
-
+      // places.value = List.generate(8, (i) => Place(name: '${i + 1}'));
       final position = await LocationRepo().getCurrentPosition();
       final res = await cache.searchNearby(position);
+      // final res = places.value;
       if (res.isEmpty) {
         places.value = [Place(name: 'None'), Place(name: 'None')];
         canBeSpun.value = false;
@@ -64,6 +65,7 @@ class SpinnerController extends GetxController{
     } catch(e) {
       places.value = [Place(name: 'None'), Place(name: 'None')];
       canBeSpun.value = false;
+      EsToast.showError(e.toString());
     } finally {
       isFetching.value = false;
     }
@@ -93,16 +95,5 @@ class SpinnerController extends GetxController{
           )
       );
     });
-  }
-
-  Future<void> logout() async {
-    isLoggingOut.value = true;
-    try {
-      await AuthRepo().signOut();
-      isLoggingOut.value = false;
-    } catch(e){
-      isLoggingOut.value = false;
-      rethrow;
-    }
   }
 }

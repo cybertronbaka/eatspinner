@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -13,10 +14,6 @@ class CustomSpinnerIndicatorPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
       ..color = strokeColor
-      ..strokeWidth = strokeWidth
-      ..style = paintingStyle;
-    Paint newPaint = Paint()
-      ..color = Colors.white.withOpacity(0.2)
       ..strokeWidth = strokeWidth
       ..style = paintingStyle;
     canvas.drawPath(getTopPartPath(size.width, size.height), paint);
@@ -65,19 +62,41 @@ class CustomSpinnerIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.rotate(
-      angle: math.pi,
-      child: CustomPaint(
-        painter: CustomSpinnerIndicatorPainter(
-          strokeColor: const Color(0xFFEF2F2F),
-          strokeWidth: 10,
-          paintingStyle: PaintingStyle.fill,
+    return Stack(
+      children: [
+        Transform.rotate(
+          angle: math.pi,
+          child: CustomPaint(
+            painter: CustomSpinnerIndicatorPainter(
+              strokeColor: const Color(0xFFDF1F1F),
+              strokeWidth: 10,
+              paintingStyle: PaintingStyle.fill,
+            ),
+            child: const SizedBox(
+              height: 70,
+              width: 40,
+            ),
+          ),
         ),
-        child: const SizedBox(
-          height: 70,
-          width: 40,
-        ),
-      ),
+        Positioned(
+          left: 5,
+          top: 10,
+          child: Transform.rotate(
+            angle: math.pi,
+            child: CustomPaint(
+              painter: CustomSpinnerIndicatorPainter(
+                strokeColor: const Color(0xFFEF2F2F).withOpacity(0.8),
+                strokeWidth: 10,
+                paintingStyle: PaintingStyle.fill,
+              ),
+              child: const SizedBox(
+                height: 50,
+                width: 30,
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

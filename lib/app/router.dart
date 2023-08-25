@@ -17,7 +17,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.resetPassword,
       name: Routes.resetPassword,
-        builder: (context, state){
+      redirect: (context, state){
+        if(supabase.auth.currentUser != null) return Routes.root;
+      },
+      builder: (context, state){
         final controller = Get.put(ResetPasswordController());
         controller.reset();
         return const ResetPasswordPage();
@@ -128,6 +131,8 @@ final router = GoRouter(
       path: Routes.profile,
       name: Routes.profile,
       redirect: (context, state){
+        if(supabase.auth.currentUser == null) return Routes.root;
+
         final id = state.pathParameters['id'];
         if(id == null || id == '') return Routes.notFound;
 

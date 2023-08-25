@@ -1,4 +1,5 @@
 import 'package:eatspinner/app/_all.dart';
+import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
@@ -64,8 +65,10 @@ class ProfileMenuPage extends StatelessWidget{
               title: 'Logout',
               icon: const Icon(Icons.logout_outlined, color: Color(0xFF626262)),
               onTap: (){
+                LoadingDialog.open(context);
                 profileController.logout().then((value){
                   if(value){
+                    LoadingDialog.close(context);
                     context.pop();
                     context.pushReplacement(Routes.root);
                   }

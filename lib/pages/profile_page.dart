@@ -1,3 +1,4 @@
+import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/models/_all.dart';
 import 'package:eatspinner/services/_all.dart';
 import 'package:eatspinner/states/_all.dart';
@@ -21,7 +22,11 @@ class ProfilePage extends StatelessWidget{
         leadingWidth: 30,
         leading: BackButton(
           onPressed: (){
-            context.pop();
+            try{
+              context.pop();
+            } catch(e){
+              context.pushReplacement(Routes.root);
+            }
           },
         ),
         title: Obx((){
@@ -85,8 +90,7 @@ class ProfilePage extends StatelessWidget{
                         : [Container()]
                     ),
                     const SizedBox(height: 20),
-                    // TODO: Do Not show if profile is of current user's
-                    Row(
+                    if(supabase.auth.currentUser?.id != controller.uid) Row(
                       children: [
                         Expanded(
                           flex: 3,
@@ -129,14 +133,14 @@ class ProfilePage extends StatelessWidget{
                         )
                       ],
                     ),
-                    const SizedBox(height: 30),
+                    if(supabase.auth.currentUser?.id != controller.uid) const SizedBox(height: 30),
                     buildDetail(controller.profile.value)
                   ],
                 ),
               )
             ]
         )
-            : const ProfilePageShimmer();
+            : ProfilePageShimmer(isMine: supabase.auth.currentUser?.id == controller.uid);
       }),
     );
   }
@@ -172,7 +176,11 @@ class ProfilePage extends StatelessWidget{
 }
 
 class ProfilePageShimmer extends StatelessWidget {
-  const ProfilePageShimmer({super.key});
+  final bool isMine;
+  const ProfilePageShimmer({
+    super.key,
+    this.isMine = false
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -236,7 +244,7 @@ class ProfilePageShimmer extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // TODO: Do Not show if profile is of current user's
-              Row(
+              if(!isMine) Row(
                 children: [
                   Expanded(
                     flex: 3,
@@ -291,7 +299,7 @@ class ProfilePageShimmer extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              if(!isMine) const SizedBox(height: 30),
               SpacedColumn(
                 spaceHeight: 15,
                 children: List.generate(4, (i) => Row(

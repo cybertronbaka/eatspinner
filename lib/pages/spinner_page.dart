@@ -13,9 +13,7 @@ class SpinnerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<SpinnerController>();
     controller.fetchNearby();
-    const bgColor = Color(0xFF121318);
     return Scaffold(
-        // backgroundColor: bgColor,
         appBar: AppBar(
           leadingWidth: 30,
           title: const Text('Eat Spinner', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -56,7 +54,7 @@ class SpinnerPageBody extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
-                      color: const Color(0xFF999572).withOpacity(0.2),
+                      color: const Color(0xFF999572).withOpacity(0.3),
                       width: 5
                   ),
                   gradient: const LinearGradient(

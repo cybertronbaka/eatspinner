@@ -32,6 +32,9 @@
                 <data
                     android:scheme="com.example.eatspinner"
                     android:host="resetpassword" />
+                <data
+                    android:scheme="com.example.eatspinner"
+                    android:host="profile" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

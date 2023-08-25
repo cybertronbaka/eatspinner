@@ -63,6 +63,13 @@ class DeepLinkService {
           return Routes.notFound;
         }
         return Routes.resetPassword;
+      } else if(newUri.scheme == 'com.example.eatspinner' && newUri.host == 'profile') {
+        print('***********QueryParams : ${newUri.queryParameters}');
+
+        if(newUri.queryParameters['error'] != null || newUri.queryParameters['id'] == null){
+          return Routes.notFound;
+        }
+        return Routes.profile.replaceAll(':id', newUri.queryParameters['id']!);
       }
     }
     return null;

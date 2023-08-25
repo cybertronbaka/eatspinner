@@ -66,7 +66,6 @@ class ProfileMenuPage extends StatelessWidget{
               onTap: (){
                 profileController.logout().then((value){
                   if(value){
-                    dLink.blockRunning('authenticatedApp');
                     context.pop();
                     context.pushReplacement(Routes.root);
                   }

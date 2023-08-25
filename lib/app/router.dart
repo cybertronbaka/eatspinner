@@ -11,9 +11,6 @@ final router = GoRouter(
       path: Routes.root,
       name: Routes.root,
       redirect: (context, GoRouterState state) async {
-        final deeplinkedRoute = await dLink.handleOnStart();
-        if(deeplinkedRoute != null) return deeplinkedRoute;
-
         return supabase.auth.currentUser == null ? Routes.login : Routes.chatsHome;
       }
     ),

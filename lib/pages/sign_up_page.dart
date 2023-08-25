@@ -108,7 +108,6 @@ class SignUpPage extends StatelessWidget {
                       const Text("Already have an account? "),
                       GestureDetector(
                           onTap: (){
-                            dLink.blockRunning('login');
                             context.pushReplacement(Routes.login);
                           },
                           child: const Text(

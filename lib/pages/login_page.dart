@@ -17,7 +17,6 @@ class LoginPage extends StatefulWidget{
 class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
-    dLink.handleOnRunning(context, 'login');
     super.initState();
   }
 
@@ -81,7 +80,6 @@ class _LoginPageState extends State<LoginPage> {
                         return Obx(()=> EsFilledButton(
                           onPressed: controller.isLoggingIn.isTrue || fg.invalid ? null : (){
                             controller.login().then((value){
-                              dLink.blockRunning('login');
                               context.pushReplacement(Routes.root);
                             });
                           },

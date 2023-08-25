@@ -58,7 +58,6 @@ class ResetPasswordPage extends StatelessWidget {
                       return Obx(() => EsFilledButton(
                         onPressed: controller.isPending.isTrue || fg.invalid ? null : (){
                           controller.resetPassword().then((value){
-                            dLink.blockRunning('login');
                             context.pushReplacement(Routes.login);
                           });
                         },

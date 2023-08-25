@@ -2,8 +2,10 @@ import 'package:eatspinner/app/_all.dart';
 import 'package:eatspinner/states/_all.dart';
 import 'package:eatspinner/widgets/_all.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileMenuPage extends StatelessWidget{
   const ProfileMenuPage({super.key});
@@ -54,7 +56,9 @@ class ProfileMenuPage extends StatelessWidget{
             ProfileMenuItem(
               title: 'Share Profile Link',
               icon: const Icon(Icons.link_outlined, color: Color(0xFF626262)),
-              onTap: (){},
+              onTap: (){
+                Share.share('${dotenv.env['NEXT_URL']}/profile/${supabase.auth.currentUser!.id}');
+              },
             ),
             ProfileMenuItem(
               title: 'Logout',
@@ -62,7 +66,6 @@ class ProfileMenuPage extends StatelessWidget{
               onTap: (){
                 profileController.logout().then((value){
                   if(value){
-                    dLink.blockRunning('authenticatedApp');
                     context.pop();
                     context.pushReplacement(Routes.root);
                   }

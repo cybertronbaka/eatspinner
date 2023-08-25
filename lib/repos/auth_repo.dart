@@ -1,6 +1,7 @@
 import 'package:eatspinner/app/globals.dart';
 import 'package:eatspinner/models/profile/profile.dart';
 import 'package:eatspinner/repos/_all.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpParams{
@@ -75,7 +76,9 @@ class AuthRepo {
   Future<void> resetPassword(String email) async {
     await supabase.auth.resetPasswordForEmail(
       email,
-      redirectTo: 'com.example.eatspinner://resetpassword/'
+      // redirectTo: 'eatspinner://com.example.eatspinner/resetpassword'
+      redirectTo: '${dotenv.env['NEXT_URL']!}/resetpassword'
+      // redirectTo: 'http://localhost:3000/resetpassword'
     );
   }
 

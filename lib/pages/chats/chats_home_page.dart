@@ -16,7 +16,6 @@ class ChatsHomePage extends StatefulWidget{
 class _ChatsHomePageState extends State<ChatsHomePage>{
   @override
   void initState() {
-    dLink.handleOnRunning(context, 'authenticatedApp');
     super.initState();
   }
 

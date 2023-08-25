@@ -71,13 +71,10 @@ class EditProfileController extends GetxController{
   }
 
   Future<void> save() async {
-    isFetching.value = true;
     try{
       profile.value = await cache.update(Profile.fromJson(formGroup.value!.value));
-      isFetching.value = false;
       EsToast.showSuccess('Profile updated successfully!');
     } catch(e, stkTrc){
-      isFetching.value = false;
       EsToast.showError(e.toString(), stkTrc);
     }
   }

@@ -52,8 +52,12 @@ class EditProfilePage extends StatelessWidget{
                             url: StorageUtils.getPublicUrl(control.value as String?),
                             isEditable: true,
                             height: coverPhotoHeight,
-                            onPick: (image) => controller.uploadPhoto(image, 'cover')
-                        );
+                            onPick: (image) {
+                              LoadingDialog.open(context);
+                              controller.uploadPhoto(image, 'cover').then((value){
+                                LoadingDialog.close(context);
+                              });
+                            });
                       },
                     ),
                     Positioned(
@@ -67,7 +71,12 @@ class EditProfilePage extends StatelessWidget{
                             isEditable: true,
                             hasBorder: true,
                             diameter: coverPhotoHeight,
-                            onPick: (image) => controller.uploadPhoto(image, 'avatar'),
+                            onPick: (image) {
+                              LoadingDialog.open(context);
+                              controller.uploadPhoto(image, 'avatar').then((value){
+                                LoadingDialog.close(context);
+                              });
+                            }
                           );
                         },
                       ),
@@ -120,7 +129,10 @@ class EditProfilePage extends StatelessWidget{
                     ),
                     EsFilledButton(
                       onPressed: (){
-                        controller.save();
+                        LoadingDialog.open(context);
+                        controller.save().then((value){
+                          LoadingDialog.close(context);
+                        });
                       },
                       labelText: 'SAVE',
                     )

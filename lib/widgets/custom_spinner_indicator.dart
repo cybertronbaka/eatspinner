@@ -73,7 +73,7 @@ class CustomSpinnerIndicator extends StatelessWidget {
               paintingStyle: PaintingStyle.fill,
             ),
             child: const SizedBox(
-              height: 70,
+              height: 90,
               width: 40,
             ),
           ),
@@ -90,7 +90,7 @@ class CustomSpinnerIndicator extends StatelessWidget {
                 paintingStyle: PaintingStyle.fill,
               ),
               child: const SizedBox(
-                height: 50,
+                height: 70,
                 width: 30,
               ),
             ),

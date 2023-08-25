@@ -83,6 +83,7 @@ class SimpleCache<T, I>{
     required this.cloudOps
   }) {
     storage = LocalStorage('${config.dbName}_data.json');
+    // storage.clear();
   }
 
   List<T> getAllFromCache(){
@@ -95,7 +96,7 @@ class SimpleCache<T, I>{
   }
 
   List<T> replaceAllInCache(List<T> list){
-    storage.setItem(config.tableName, list);
+    storage.setItem(config.tableName, list.map((e) => config.toJson(e)).toList());
     return list;
   }
 

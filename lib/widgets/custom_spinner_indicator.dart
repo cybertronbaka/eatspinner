@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,6 @@ class CustomSpinnerIndicatorPainter extends CustomPainter {
       ..color = strokeColor
       ..strokeWidth = strokeWidth
       ..style = paintingStyle;
-
     canvas.drawPath(getTopPartPath(size.width, size.height), paint);
     canvas.drawPath(getBottomPartPath(size.width, size.height), paint);
   }
@@ -62,16 +62,41 @@ class CustomSpinnerIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: CustomSpinnerIndicatorPainter(
-        strokeColor: Colors.red,
-        strokeWidth: 10,
-        paintingStyle: PaintingStyle.fill,
-      ),
-      child: const SizedBox(
-        height: 50,
-        width: 25,
-      ),
+    return Stack(
+      children: [
+        Transform.rotate(
+          angle: math.pi,
+          child: CustomPaint(
+            painter: CustomSpinnerIndicatorPainter(
+              strokeColor: const Color(0xFFDF1F1F),
+              strokeWidth: 10,
+              paintingStyle: PaintingStyle.fill,
+            ),
+            child: const SizedBox(
+              height: 70,
+              width: 40,
+            ),
+          ),
+        ),
+        Positioned(
+          left: 5,
+          top: 10,
+          child: Transform.rotate(
+            angle: math.pi,
+            child: CustomPaint(
+              painter: CustomSpinnerIndicatorPainter(
+                strokeColor: const Color(0xFFEF2F2F).withOpacity(0.8),
+                strokeWidth: 10,
+                paintingStyle: PaintingStyle.fill,
+              ),
+              child: const SizedBox(
+                height: 50,
+                width: 30,
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

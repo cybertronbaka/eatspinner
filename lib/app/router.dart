@@ -140,7 +140,8 @@ final router = GoRouter(
       },
       builder: (context, GoRouterState state){
         final id = state.pathParameters['id'];
-        final controller = Get.put(ProfileController(uid: id!));
+        final controller = Get.put(ProfileController());
+        controller.init(uid: id!);
         return const ProfilePage();
       },
     ),

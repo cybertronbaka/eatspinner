@@ -16,4 +16,5 @@ class Routes{
   static const editProfile = '/profile/edit';
   static const chatRoom = '/chats/room';
   static const notifications = '/notifications';
+  static const friendRequests = '/friendRequests';
 }

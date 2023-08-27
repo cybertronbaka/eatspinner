@@ -8,9 +8,11 @@ import 'package:go_router/go_router.dart';
 
 class ProfileCard extends StatelessWidget{
   final Profile? profile;
+  final bool isEditable;
   const ProfileCard({
     super.key,
-    required this.profile
+    required this.profile,
+    this.isEditable = true
   });
 
   @override
@@ -55,7 +57,7 @@ class ProfileCard extends StatelessWidget{
               ],
             ),
           ),
-          IconButton(
+          if(isEditable) IconButton(
               onPressed: (){
                 context.push(Routes.editProfile);
               },

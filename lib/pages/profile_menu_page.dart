@@ -26,57 +26,73 @@ class ProfileMenuPage extends StatelessWidget{
           );
         }),
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: SpacedColumn(
-          spaceHeight: 10,
-          children: [
-            Obx((){
-              return ProfileCard(
-                profile: profileController.profile.value
-              );
-            }),
-            const SizedBox(height: 10),
-            ProfileMenuItem(
-              title: 'View Profile',
-              icon: const Icon(Icons.visibility_outlined, color: Color(0xFF626262)),
-              onTap: (){
-                context.pushNamed(
-                  Routes.profile,
-                  pathParameters: { 'id': supabase.auth.currentUser!.id }
+        children: [
+          SpacedColumn(
+            spaceHeight: 10,
+            children: [
+              Obx((){
+                return ProfileCard(
+                    profile: profileController.profile.value
                 );
-              },
-            ),
-            ProfileMenuItem(
-              title: 'Play Eat Spinner',
-              icon: const Icon(Icons.gamepad_outlined, color: Color(0xFF626262)),
-              onTap: (){
-                context.push(Routes.spinner);
-              },
-            ),
-            ProfileMenuItem(
-              title: 'Share Profile Link',
-              icon: const Icon(Icons.link_outlined, color: Color(0xFF626262)),
-              onTap: (){
-                Share.share('${dotenv.env['NEXT_URL']}/profile/${supabase.auth.currentUser!.id}');
-              },
-            ),
-            ProfileMenuItem(
-              title: 'Logout',
-              icon: const Icon(Icons.logout_outlined, color: Color(0xFF626262)),
-              onTap: (){
-                LoadingDialog.open(context);
-                profileController.logout().then((value){
-                  if(value){
-                    LoadingDialog.close(context);
-                    context.pop();
-                    context.pushReplacement(Routes.root);
-                  }
-                });
-              },
-            )
-          ],
-        ),
+              }),
+              const SizedBox(height: 10),
+              ProfileMenuItem(
+                title: 'View Profile',
+                icon: const Icon(Icons.visibility_outlined, color: Color(0xFF626262)),
+                onTap: (){
+                  context.pushNamed(
+                      Routes.profile,
+                      pathParameters: { 'id': supabase.auth.currentUser!.id }
+                  );
+                },
+              ),
+              ProfileMenuItem(
+                title: 'Play Eat Spinner',
+                icon: const Icon(Icons.gamepad_outlined, color: Color(0xFF626262)),
+                onTap: (){
+                  context.push(Routes.spinner);
+                },
+              ),
+              ProfileMenuItem(
+                title: 'Friend Requests',
+                icon: const Icon(Icons.emoji_people_outlined, color: Color(0xFF626262)),
+                onTap: (){
+                  // context.push(Routes.friendRequests);
+                },
+              ),
+              ProfileMenuItem(
+                title: 'Friends',
+                icon: const Icon(Icons.people_outline_rounded, color: Color(0xFF626262)),
+                onTap: (){
+                  // context.push(Routes.friendRequests);
+                },
+              ),
+              ProfileMenuItem(
+                title: 'Share Profile Link',
+                icon: const Icon(Icons.share_outlined, color: Color(0xFF626262)),
+                onTap: (){
+                  Share.share('${dotenv.env['NEXT_URL']}/profile/${supabase.auth.currentUser!.id}?name=${profileController.profile.value?.name ?? 'This Profile'}');
+                },
+              ),
+              ProfileMenuItem(
+                title: 'Logout',
+                icon: const Icon(Icons.logout_outlined, color: Color(0xFF626262)),
+                onTap: (){
+                  LoadingDialog.open(context);
+                  profileController.logout().then((value){
+                    if(value){
+                      LoadingDialog.close(context);
+                      context.pop();
+                      context.pushReplacement(Routes.root);
+                    }
+                  });
+                },
+              )
+            ],
+          )
+        ],
       ),
     );
   }

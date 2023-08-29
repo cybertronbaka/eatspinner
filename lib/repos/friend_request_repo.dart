@@ -33,7 +33,7 @@ class FriendRequestRepo{
 
     final res = await filterBuilder.maybeSingle() as Map<String, dynamic>?;
 
-    print("FETCHED ONE(Place) is $res");
+    print("FETCHED ONE(FR) is $res");
     if(res == null) return null;
 
     return FriendRequest.fromJson(res);
@@ -45,7 +45,7 @@ class FriendRequestRepo{
 
     final res = await filterBuilder.maybeSingle() as Map<String, dynamic>?;
 
-    print("FETCHED ONE(Place) is $res");
+    print("FETCHED ONE(FR) is $res");
     if(res == null) return null;
 
     return FriendRequest.fromJson(res);
@@ -59,7 +59,7 @@ class FriendRequestRepo{
 
     final res = await filterBuilder.maybeSingle() as Map<String, dynamic>?;
 
-    print("FETCHED ONE(Place) is $res");
+    print("FETCHED ONE(FR) is $res");
     if(res == null) return null;
 
     return FriendRequest.fromJson(res);
@@ -72,7 +72,7 @@ class FriendRequestRepo{
         .eq('receiver_uid', supabase.auth.currentUser!.id)
         .order('created_at', ascending: false)
         as List;
-    print("FETCHED MANY(Place) is $response");
+    print("FETCHED MANY(FR) is $response");
 
     return convertMapListToObjs(response);
   }

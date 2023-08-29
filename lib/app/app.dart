@@ -1,11 +1,50 @@
 import 'package:eatspinner/app/_all.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-class EatSpinnerApp extends StatelessWidget {
+class EatSpinnerApp extends StatefulWidget {
   const EatSpinnerApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<StatefulWidget> createState() => _EatSpinnerAppState();
+}
+
+
+class _EatSpinnerAppState extends State<EatSpinnerApp>{
+
+  @override
+  void initState() {
+    addNotificationHandlers();
+    super.initState();
+  }
+
+  void addNotificationHandlers(){
+    OneSignal.User.pushSubscription.addObserver((state) {
+      print(state.current.jsonRepresentation());
+    });
+
+    OneSignal.Notifications.addPermissionObserver((state) {
+      print("Has permission $state");
+    });
+
+    OneSignal.Notifications.addClickListener((event) {
+      // final data = event.notification.additionalData;
+      // print('NOTIFICATION CLICK LISTENER CALLED WITH EVENT: $data');
+      // if(data == null) return;
+    });
+
+    OneSignal.Notifications.addForegroundWillDisplayListener((event) {
+      /// preventDefault to not display the notification
+      event.preventDefault();
+
+      /// Do async work
+
+      // / notification.display() to display after preventing default
+      event.notification.display();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

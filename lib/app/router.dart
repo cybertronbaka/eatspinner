@@ -4,6 +4,7 @@ import 'package:eatspinner/states/_all.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 final router = GoRouter(
   routes: [
@@ -11,6 +12,9 @@ final router = GoRouter(
       path: Routes.root,
       name: Routes.root,
       redirect: (context, GoRouterState state) async {
+        if(supabase.auth.currentUser != null){
+          await OneSignal.login(supabase.auth.currentUser!.id);
+        }
         return supabase.auth.currentUser == null ? Routes.login : Routes.chatsHome;
       }
     ),

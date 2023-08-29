@@ -2,6 +2,7 @@ import 'package:eatspinner/app/globals.dart';
 import 'package:eatspinner/models/profile/profile.dart';
 import 'package:eatspinner/repos/_all.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignUpParams{
@@ -34,6 +35,7 @@ class SignInParams {
 
 class AuthRepo {
   Future<void> signOut() async {
+    await OneSignal.logout();
     await supabase.auth.signOut();
   }
 
@@ -42,6 +44,8 @@ class AuthRepo {
       email: params.email.trim(),
       password: params.password
     );
+    final cuid = supabase.auth.currentUser!.id;
+    await OneSignal.login(cuid);
   }
 
   Future<void> signUp(SignUpParams params) async {

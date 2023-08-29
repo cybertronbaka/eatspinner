@@ -53,6 +53,8 @@ dependencies:
   uuid: ^3.0.7
   share_plus: ^7.1.0
   bottom_sheet: ^4.0.0
+  onesignal_flutter: ^5.0.0
+  http: ^0.13.3
   simple_cache:
     path: ./packages/simple_cache
 

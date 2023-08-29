@@ -16,7 +16,7 @@ class ProfileAction {
 }
 
 enum ProfileMainActionMode {
-  none, addToContact, accept, rejected, requestAlreadySent, alreadyFriends
+  none, addToContact, accept, rejectedByMe, rejectedByOther, requestAlreadySent, alreadyFriends
 }
 
 extension ProfileMainActionModeExt on ProfileMainActionMode {
@@ -28,7 +28,9 @@ extension ProfileMainActionModeExt on ProfileMainActionMode {
         return 'Request Already Sent';
       case ProfileMainActionMode.accept:
         return 'Accept';
-      case ProfileMainActionMode.rejected:
+      case ProfileMainActionMode.rejectedByMe:
+        return 'Rejected';
+      case ProfileMainActionMode.rejectedByOther:
         return 'Rejected';
       case ProfileMainActionMode.addToContact:
         return 'Add to Contacts';
@@ -54,7 +56,9 @@ extension ProfileMainActionModeExt on ProfileMainActionMode {
             LoadingDialog.close(context);
           });
         };
-      case ProfileMainActionMode.rejected:
+      case ProfileMainActionMode.rejectedByMe:
+        return null;
+      case ProfileMainActionMode.rejectedByOther:
         return null;
       case ProfileMainActionMode.addToContact:
         return (){
@@ -100,7 +104,7 @@ extension ProfileMainActionModeExt on ProfileMainActionMode {
             widget: const Icon(Icons.remove_circle_outline_outlined)
           )
         ];
-      case ProfileMainActionMode.rejected:
+      case ProfileMainActionMode.rejectedByMe:
         return [
           ProfileAction(
               title: 'Accept Request',
@@ -111,9 +115,11 @@ extension ProfileMainActionModeExt on ProfileMainActionMode {
                   context.pop();
                 });
               },
-              widget: const Icon(Icons.remove_circle_outline_outlined)
+              widget: const Icon(Icons.check_outlined)
           )
         ];
+      case ProfileMainActionMode.rejectedByOther:
+        return [];
       case ProfileMainActionMode.addToContact:
         return [];
       case ProfileMainActionMode.alreadyFriends:
